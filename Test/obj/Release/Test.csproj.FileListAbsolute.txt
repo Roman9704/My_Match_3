@@ -1,0 +1,10 @@
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\Test.exe.config
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\Test.exe
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\Test.pdb
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\sfmlnet-audio-2.dll
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\sfmlnet-graphics-2.dll
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\sfmlnet-system-2.dll
+D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\sfmlnet-window-2.dll
+D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Release\Test.exe
+D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Release\Test.pdb
+D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Release\Test.csprojResolveAssemblyReference.cache
