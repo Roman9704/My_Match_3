@@ -11,19 +11,25 @@ namespace Test
     class World
     {
         public const int AMOUNT_OF_ELEMENTS = 8;
-        Vector2f Offset;
+        static Vector2f Offset;
 
-        Element[,] elements = null;
+        public static Element[,] elements = null;
 
-        Grid grid = null;
-
-        Random random = null;
+        static Random random = null;
 
         public World()
         {
-            elements = new Element[AMOUNT_OF_ELEMENTS, AMOUNT_OF_ELEMENTS];
-            Offset = new Vector2f(0, 60 + Grid.COORDINATE_SHIFT);
-            random = new Random();
+            
+        }
+
+        public void Destroy()
+        {
+            for (int y = 0; y < AMOUNT_OF_ELEMENTS; y++)
+                for (int x = 0; x < AMOUNT_OF_ELEMENTS; x++)
+                    elements[y, x] = null;
+            elements = null;
+            
+            random = null;
         }
 
         public void Update()
@@ -48,9 +54,11 @@ namespace Test
                 }
         }
 
-        public void generate_Elements(Grid grid)
+        public void generate_Elements()
         {
-            this.grid = grid;
+            elements = new Element[AMOUNT_OF_ELEMENTS, AMOUNT_OF_ELEMENTS];
+            Offset = new Vector2f(0, 60 + Grid.COORDINATE_SHIFT);
+            random = new Random();
 
             for (int y = 0 ;y < AMOUNT_OF_ELEMENTS; y++)
                 for (int x = 0; x < AMOUNT_OF_ELEMENTS; x++)
@@ -74,7 +82,7 @@ namespace Test
                     }
         }
 
-        public void swap_Elements(int x1, int y1, int x2, int y2)
+        public static void swap_Elements(int x1, int y1, int x2, int y2)
         {
             Element element;
 
@@ -84,7 +92,7 @@ namespace Test
             elements[y2, x2] = element;
         }
 
-        public void spawn_Element(Cell cell)
+        public static void spawn_Element(Cell cell)
         {
             switch (random.Next(1, 6))
             {
@@ -113,17 +121,17 @@ namespace Test
             return elements;
         }
 
-        public void set_up_Element(ElementType type, Vector2f Position, int x, int y)
+        public static void set_up_Element(ElementType type, Vector2f Position, int x, int y)
         {
             elements[y, x] = new Element(type, Position - Offset, Position,MoveType.DOWN);
         }
 
         public void set_Element(ElementType type, int x, int y)
         {
-            elements[y, x] = new Element(type, grid.get_Position(x, y));
+            elements[y, x] = new Element(type, Grid.get_Position(x, y));
         }
 
-        public void delete_Element(int x, int y)
+        public static void delete_Element(int x, int y)
         {
             elements[y, x] = null;
         }

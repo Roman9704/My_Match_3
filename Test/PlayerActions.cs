@@ -6,20 +6,11 @@ namespace Test
     {
         bool ActionOccurred = false;
 
-        List<Cell> ChosenCells = null;
+        public static List<Cell> ChosenCells = null;
 
-        GameLogic gameLogic = null;
-        Cell[,] cells = null;
-        World world = null;
-
-        public PlayerActions(GameLogic gameLogic, World world)
+        public PlayerActions()
         {
-            set_GameLogic(gameLogic);
-            set_Cells(gameLogic.get_Cells());
-
-            this.world = world;
-
-            ChosenCells = new List<Cell>();
+            
         }
 
         public void Update()
@@ -27,10 +18,21 @@ namespace Test
             update_ChosenCells();
         }
 
+        public void Generate()
+        {
+            ChosenCells = new List<Cell>();
+        }
+
+        public void Destroy()
+        {
+            ChosenCells.Clear();
+            ChosenCells = null;
+        }
+
         // Обновление списка выбранных элементов
         private void update_ChosenCells() 
         {
-            if (gameLogic.get_AreElementsMove() == false && gameLogic.get_DoEmptyCellsExist() == false && ActionOccurred == false)
+            if (GameLogic.AreElementsMove == false && GameLogic.DoEmptyCellsExist == false && ActionOccurred == false)
             {
                 if (ChosenCells.Count > 1)
                 {
@@ -90,9 +92,9 @@ namespace Test
             }
             else
             {
-                if (ActionOccurred && gameLogic.get_AreElementsMove() == false)
+                if (ActionOccurred && GameLogic.AreElementsMove == false)
                 {
-                    if (gameLogic.get_DoEmptyCellsExist())
+                    if (GameLogic.DoEmptyCellsExist)
                     {
                         unchosed_and_remove_ChosenCell(1);
                         unchosed_and_remove_ChosenCell(0);
@@ -156,7 +158,7 @@ namespace Test
             ChosenCells[0].get_Element().set_MoveType(type0);
             ChosenCells[1].get_Element().set_MoveType(type1);
 
-            world.swap_Elements(ChosenCells[0].get_IndicesX(), ChosenCells[0].get_IndicesY(), ChosenCells[1].get_IndicesX(), ChosenCells[1].get_IndicesY());
+            World.swap_Elements(ChosenCells[0].get_IndicesX(), ChosenCells[0].get_IndicesY(), ChosenCells[1].get_IndicesX(), ChosenCells[1].get_IndicesY());
         }
 
         private void rebind_ChosenElements_in_Cells()
@@ -166,17 +168,6 @@ namespace Test
             element = ChosenCells[0].get_Element();
             ChosenCells[0].change_bind_Element(ChosenCells[1].get_Element());
             ChosenCells[1].change_bind_Element(element);
-        }
-
-
-        private void set_Cells(Cell[,] cells)
-        {
-            this.cells = cells;
-        }
-
-        private void set_GameLogic(GameLogic gameLogic)
-        {
-            this.gameLogic = gameLogic;
         }
 
         public List<Cell> get_ChosenCells()

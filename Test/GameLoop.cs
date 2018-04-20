@@ -9,31 +9,26 @@ namespace Test
         public static float dt = 0;
         //const float DENOMINATOR = 1;
 
-        RenderWindow window = null;
-        SceneHandler sceneHandler = null;
-
-        public GameLoop(RenderWindow window, SceneHandler sceneHandler)
+        public GameLoop()
         {
-            this.window = window;
-            this.sceneHandler = sceneHandler;
             clock = new Clock();
         }
 
         public void Update()
         {
-            while (window.IsOpen)
+            while (Initializer.window.IsOpen)
             {
-                window.DispatchEvents();
+                Initializer.window.DispatchEvents();
 
-                if (window.HasFocus())
+                if (Initializer.window.HasFocus())
                 {
                     update_time();
 
-                    sceneHandler.Update();
+                    Initializer.sceneHandler.Update();
 
-                    sceneHandler.Draw();
+                    Initializer.sceneHandler.Draw();
 
-                    window.Display();
+                    Initializer.window.Display();
                 }
             }
         }

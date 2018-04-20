@@ -19,20 +19,16 @@ namespace Test
         BackgroundType type;
 
         Color ClearColor;
-        RenderWindow window = null;
         Color colorDarkPurple = new Color(48, 10, 36);
         Color colorTurquoise = new Color(207, 245, 219);
         
-        public Background(RenderWindow window)
+        public Background()
         {
-            set_Window(window);
             set_BackgroundType(BackgroundType.DarkPurple);
             set_ClearColor(colorDarkPurple);
         }
-        public Background(RenderWindow window, BackgroundType type)
+        public Background(BackgroundType type)
         {
-            set_Window(window);
-
             set_BackgroundType(type);
         }
 
@@ -76,14 +72,9 @@ namespace Test
             return ClearColor;
         }
 
-        private void set_Window(RenderWindow window)
-        {
-            this.window = window;
-        }
-
         public void Draw()
         {
-            window.Clear(ClearColor);
+            Initializer.window.Clear(ClearColor);
         }
     }
 }

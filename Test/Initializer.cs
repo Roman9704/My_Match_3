@@ -7,8 +7,8 @@ namespace Test
 {
     class Initializer
     {
-        public const int WINDOW_WIDTH = (60 + Grid.PARTITION_WIDTH) * World.AMOUNT_OF_ELEMENTS + Grid.COORDINATE_SHIFT;
-        public const int WINDOW_HEIGHT = WINDOW_WIDTH + GameInterface.HEIGHT_Timer_and_Score;
+        public const uint WINDOW_WIDTH = ((uint)Element.ELEMENT_SIZE + Grid.PARTITION_WIDTH) * World.AMOUNT_OF_ELEMENTS + Grid.COORDINATE_SHIFT;
+        public const uint WINDOW_HEIGHT = WINDOW_WIDTH + GameInterface.HEIGHT_Timer_and_Score;
 
         public static RenderWindow window = null;
         public static SceneHandler sceneHandler = null;
@@ -36,12 +36,12 @@ namespace Test
         }
         private static void init_SceneHandler()
         {
-            sceneHandler = new SceneHandler(window);
+            sceneHandler = new SceneHandler();
         }
 
         private static void init_GameLoop()
         {
-            gameLoop = new GameLoop(window, sceneHandler);
+            gameLoop = new GameLoop();
         }
 
         private static void Window_Closed(object sender, EventArgs e)
