@@ -5,8 +5,8 @@ namespace Test
 {
     class Grid
     {
-        public const int PARTITION_WIDTH = 5;
-        public const int COORDINATE_SHIFT = 5;
+        public const int partitionWidth = 5;
+        public const int coordinateShift = 5;
 
         public static Cell[,] cells = null;
         
@@ -17,23 +17,25 @@ namespace Test
 
         public void Destroy()
         {
-            for (int y = 0; y < World.AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < World.AMOUNT_OF_ELEMENTS; x++)
+            for (int y = 0; y < World.AmountOfElements; y++)
+                for (int x = 0; x < World.AmountOfElements; x++)
+                {
                     cells[y, x].Destroy();
-
+                    cells[y, x] = null;
+                }
             cells = null;
         }
 
-        public void generate_Cells()
+        public void generate_cells()
         {
-            cells = new Cell[World.AMOUNT_OF_ELEMENTS, World.AMOUNT_OF_ELEMENTS];
+            cells = new Cell[World.AmountOfElements, World.AmountOfElements];
 
             int X, Y;
-            for (int y = 0; y < World.AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < World.AMOUNT_OF_ELEMENTS; x++)
+            for (int y = 0; y < World.AmountOfElements; y++)
+                for (int x = 0; x < World.AmountOfElements; x++)
                 {
-                    X = x * ((int)Element.ELEMENT_SIZE + PARTITION_WIDTH) + COORDINATE_SHIFT;
-                    Y = y * ((int)Element.ELEMENT_SIZE + PARTITION_WIDTH) + COORDINATE_SHIFT;
+                    X = x * ((int)Element.elementSize + partitionWidth) + coordinateShift;
+                    Y = y * ((int)Element.elementSize + partitionWidth) + coordinateShift;
 
                     cells[y, x] = new Cell(x, y, X, Y);
                 }
@@ -41,26 +43,26 @@ namespace Test
 
         public void bind_Elements_to_Cells()
         {
-            for (int y = 0; y < World.AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < World.AMOUNT_OF_ELEMENTS; x++)
+            for (int y = 0; y < World.AmountOfElements; y++)
+                for (int x = 0; x < World.AmountOfElements; x++)
                 {
-                    cells[y, x].bind_Element(World.elements[y, x]);
+                    cells[y, x].bind_element(World.Elements[y, x]);
                 }
         }
 
-        public static Vector2f get_Position(int x, int y)
+        public static Vector2f get_position(int x, int y)
         {
-            return cells[y, x].get_Position();
+            return cells[y, x].get_position();
         }
 
-        public static float get_PositionX(int x, int y)
+        public static float get_positionX(int x, int y)
         {
-            return cells[y, x].get_PositionX();
+            return cells[y, x].get_positionX();
         }
 
-        public static float get_PositionY(int x, int y)
+        public static float get_positionY(int x, int y)
         {
-            return cells[y, x].get_PositionY();
+            return cells[y, x].get_positionY();
         }
     }
 }

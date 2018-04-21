@@ -25,9 +25,9 @@ namespace Test
 
     class Element : AbstractRectangularButton
     {
-        public const int ELEMENT_SIZE = 60;
-        public const float ELEMENT_MOVE_SPEED = 200f;
-        const int POINTS = 1;
+        public const int elementSize = 60;
+        public const float elementMoveSpeed = 200f;
+        const int points = 1;
 
         ElementType type = ElementType.NONE;
         MoveType moveType = MoveType.NONE;
@@ -35,39 +35,45 @@ namespace Test
 
         public Element(ElementType type, Vector2f Position)
         {
-            set_WIDTH(ELEMENT_SIZE);
-            set_HEIGHT(ELEMENT_SIZE);
+            set_width(elementSize);
+            set_height(elementSize);
             set_ElementType(type);
 
 
-            set_Sprite(Content.ElementSprite[(int)type]);
-            set_SelectSprite(Content.SelectSprite);
-            set_Position(Position);
+            set_sprite(Content.ElementSprite[(int)type]);
+            set_selectSprite(Content.SelectSprite);
+            set_position(Position);
 
-            Initializer.window.MouseMoved += update_Selected;
-            Initializer.window.MouseButtonPressed += update_Clicked;
+            Initializer.Window.MouseMoved += update_selected;
+            Initializer.Window.MouseButtonPressed += updateClicked;
         }
 
         public Element(ElementType type, Vector2f Position, Vector2f newPosition, MoveType moveType)
         {
-            set_WIDTH(ELEMENT_SIZE);
-            set_HEIGHT(ELEMENT_SIZE);
+            set_width(elementSize);
+            set_height(elementSize);
             set_ElementType(type);
 
-            set_Sprite(Content.ElementSprite[(int)type]);
-            set_SelectSprite(Content.SelectSprite);
-            set_Position(Position);
+            set_sprite(Content.ElementSprite[(int)type]);
+            set_selectSprite(Content.SelectSprite);
+            set_position(Position);
             set_newPosition(newPosition);
             set_MoveType(moveType);
 
-            Initializer.window.MouseMoved += update_Selected;
-            Initializer.window.MouseButtonPressed += update_Clicked;
+            Initializer.Window.MouseMoved += update_selected;
+            Initializer.Window.MouseButtonPressed += updateClicked;
+        }
+
+        public void Destroy()
+        {
+            Initializer.Window.MouseMoved -= update_selected;
+            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         ~Element()
         {
-            Initializer.window.MouseMoved -= update_Selected;
-            Initializer.window.MouseButtonPressed -= update_Clicked;
+            Initializer.Window.MouseMoved -= update_selected;
+            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         public override void Update()
@@ -99,45 +105,45 @@ namespace Test
 
         private void Move_UP()
         {
-            set_PositionY(Position.Y - GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionY(_position.Y - GameLoop.dt * elementMoveSpeed);
 
-            if (Position.Y <= newPosition.Y)
+            if (_position.Y <= newPosition.Y)
             {
                 moveType = MoveType.NONE;
-                set_PositionY(newPosition.Y);
+                set_positionY(newPosition.Y);
             }
         }
 
         private void Move_DOWN()
         {
-            set_PositionY(Position.Y + GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionY(_position.Y + GameLoop.dt * elementMoveSpeed);
 
-            if (Position.Y >= newPosition.Y)
+            if (_position.Y >= newPosition.Y)
             {
                 moveType = MoveType.NONE;
-                set_PositionY(newPosition.Y);
+                set_positionY(newPosition.Y);
             }
         }
 
         private void Move_LEFT()
         {
-            set_PositionX(Position.X - GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionX(_position.X - GameLoop.dt * elementMoveSpeed);
 
-            if (Position.X <= newPosition.X)
+            if (_position.X <= newPosition.X)
             {
                 moveType = MoveType.NONE;
-                set_PositionX(newPosition.X);
+                set_positionX(newPosition.X);
             }
         }
 
         private void Move_RIGHT()
         {
-            set_PositionX(Position.X + GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionX(_position.X + GameLoop.dt * elementMoveSpeed);
 
-            if (Position.X >= newPosition.X)
+            if (_position.X >= newPosition.X)
             {
                 moveType = MoveType.NONE;
-                set_PositionX(newPosition.X);
+                set_positionX(newPosition.X);
             }
         }
 
@@ -188,15 +194,15 @@ namespace Test
 
         public int get_POINTS()
         {
-            return POINTS;
+            return points;
         }
 
         public override void Draw()
         {
-            Initializer.window.Draw(Sprite);
-            if (SELECTED || PRESSED)
+            Initializer.Window.Draw(_sprite);
+            if (_selected || _pressed)
             {
-                Initializer.window.Draw(SelectSprite);
+                Initializer.Window.Draw(_selectSprite);
             }
         }
     }

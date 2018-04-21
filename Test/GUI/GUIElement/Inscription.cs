@@ -5,94 +5,94 @@ namespace Test
 {
     class Inscription : AbstractGUIElement
     {
-        Text text = null;
+        Text _text = null;
 
         Inscription(string String, Font font, uint size)
         {
-            text = new Text(String, font, size);
+            _text = new Text(String, font, size);
         }
         Inscription(string String, Font font)
         {
-            text = new Text(String, font);
+            _text = new Text(String, font);
         }
         Inscription()
         {
-            text = new Text();
+            _text = new Text();
         }
         Inscription(Inscription copy)
         {
-            text = new Text(copy.get_String(), copy.get_Font(), copy.get_Size());
-            text.Color = copy.get_Color();
-            text.Style = copy.get_Style();
+            _text = new Text(copy.get_string(), copy.get_font(), copy.get_size());
+            _text.Color = copy.get_color();
+            _text.Style = copy.get_style();
         }
 
-        public void set_String(string text){
-            this.text.DisplayedString = text;
+        public void set_string(string text){
+            this._text.DisplayedString = text;
         }
-        public string get_String()
+        public string get_string()
         {
-            return text.DisplayedString;
+            return _text.DisplayedString;
         }
-        public void set_Color(Color color)
+        public void set_color(Color color)
         {
-            text.Color = color;
+            _text.Color = color;
         }
-        public Color get_Color()
+        public Color get_color()
         {
-            return text.Color;
+            return _text.Color;
         }
-        public override void set_Position(Vector2f vector2f)
+        public override void set_position(Vector2f vector2f)
         {
-            text.Position = vector2f;
+            _text.Position = vector2f;
         }
-        public override Vector2f get_Position()
+        public override Vector2f get_position()
         {
-            return text.Position;
+            return _text.Position;
         }
-        public override void set_PositionX(float X)
+        public override void set_positionX(float X)
         {
-            text.Position = new Vector2f(X, text.Position.Y);
+            _text.Position = new Vector2f(X, _text.Position.Y);
         }
-        public override float get_PositionX()
+        public override float get_positionX()
         {
-            return text.Position.X;
+            return _text.Position.X;
         }
-        public override void set_PositionY(float Y)
+        public override void set_positionY(float Y)
         {
-            text.Position = new Vector2f(text.Position.X, Y);
+            _text.Position = new Vector2f(_text.Position.X, Y);
         }
-        public override float get_PositionY()
+        public override float get_positionY()
         {
-            return text.Position.Y;
+            return _text.Position.Y;
         }
-        public void set_Font(Font font)
+        public void set_font(Font font)
         {
-            text.Font = font;
+            _text.Font = font;
         }
-        public Font get_Font()
+        public Font get_font()
         {
-            return text.Font;
+            return _text.Font;
         }
-        public void set_Style(Text.Styles style)
+        public void set_style(Text.Styles style)
         {
-            text.Style = style;
+            _text.Style = style;
         }
-        public Text.Styles get_Style()
+        public Text.Styles get_style()
         {
-            return text.Style;
+            return _text.Style;
         }
-        public void set_Size(uint size)
+        public void set_size(uint size)
         {
-            text.CharacterSize = size;
+            _text.CharacterSize = size;
         }
-        public uint get_Size()
+        public uint get_size()
         {
-            return text.CharacterSize;
+            return _text.CharacterSize;
         }
 
         public override void Draw()
         {
-            Initializer.window.Draw(text);
+            Initializer.Window.Draw(_text);
         }
         public override void Update()
         {

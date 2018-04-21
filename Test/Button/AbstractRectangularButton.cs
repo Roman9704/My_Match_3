@@ -11,141 +11,140 @@ namespace Test
         public event MethodContainer Clicked = delegate { };
         public event MethodContainer UnClicked = delegate { };
 
-        protected Vector2f Position;
-        protected Vector2f DownRightCorner;
-        protected Sprite Sprite = null;
-        protected Sprite SelectSprite = null;
-        protected float WIDTH = 0;
-        protected float HEIGHT = 0;
-        protected bool SELECTED = false;
-        protected bool PRESSED = false;
+        protected Vector2f _position;
+        protected Vector2f _downRightCorner;
+        protected Sprite _sprite = null;
+        protected Sprite _selectSprite = null;
+        protected float _width = 0;
+        protected float _height = 0;
+        protected bool _selected = false;
+        protected bool _pressed = false;
 
         abstract public void Draw();
-
         abstract public void Update();
-
-        protected void update_Clicked(object sender, MouseButtonEventArgs e)
+        protected void updateClicked(object sender, MouseButtonEventArgs e)
         {
-            if (SELECTED)
+            if (_selected)
             {
-                if (PRESSED == false)
+                if (_pressed == false)
                 {
-                    PRESSED = true;
+                    _pressed = true;
                     Clicked();
                 }
                 else
                 {
-                    PRESSED = false;
+                    _pressed = false;
                     UnClicked();
                 }
             }
         }
 
-        protected void update_Selected(object sender, MouseMoveEventArgs e)
+        protected void update_selected(object sender, MouseMoveEventArgs e)
         {
-            if (Mouse.GetPosition(Initializer.window).X >= Position.X && Mouse.GetPosition(Initializer.window).Y >= Position.Y &&
-                Mouse.GetPosition(Initializer.window).X <= DownRightCorner.X && Mouse.GetPosition(Initializer.window).Y <= DownRightCorner.Y)
+            if (Mouse.GetPosition(Initializer.Window).X >= _position.X && Mouse.GetPosition(Initializer.Window).Y >= _position.Y &&
+                Mouse.GetPosition(Initializer.Window).X <= _downRightCorner.X && Mouse.GetPosition(Initializer.Window).Y <= _downRightCorner.Y)
             {
-                SELECTED = true;
+                _selected = true;
+
             }
             else
             {
-                SELECTED = false;
+                _selected = false;
             }
         }
 
-        protected void update_SpritesPosition()
+        protected void update_spritesPosition()
         {
-            Sprite.Position = Position;
-            SelectSprite.Position = Position;
+            _sprite.Position = _position;
+            _selectSprite.Position = _position;
         }
 
-        protected void update_DownRightCorner()
+        protected void update_downRightCorner()
         {
-            DownRightCorner.X = Position.X + WIDTH;
-            DownRightCorner.Y = Position.Y + HEIGHT;
+            _downRightCorner.X = _position.X + _width;
+            _downRightCorner.Y = _position.Y + _height;
         }
 
-        protected void set_WIDTH(float width)
+        protected void set_width(float width)
         {
-            WIDTH = width;
+            this._width = width;
         }
 
-        protected void set_WIDTH(int width)
+        protected void set_width(int width)
         {
-            WIDTH = width;
+            this._width = width;
         }
 
-        protected void set_HEIGHT(float height)
+        protected void set_height(float height)
         {
-            HEIGHT = height;
+            this._height = height;
         }
 
-        protected void set_HEIGHT(int height)
+        protected void set_height(int height)
         {
-            HEIGHT = height;
+            this._height = height;
         }
 
-        public void set_PRESSED(bool pressed)
+        public void set_pressed(bool pressed)
         {
-            PRESSED = pressed;
+            this._pressed = pressed;
         }
 
-        public bool get_PRESSSED()
+        public bool get_pressed()
         {
-            return PRESSED;
+            return _pressed;
         }
 
-        protected void set_Sprite(Sprite sprite)
+        protected void set_sprite(Sprite sprite)
         {
-            Sprite = new Sprite(sprite);
+            this._sprite = new Sprite(sprite);
         }
 
-        protected void set_SelectSprite(Sprite selectSprite)
+        protected void set_selectSprite(Sprite selectSprite)
         {
-            SelectSprite = new Sprite(selectSprite);
+            this._selectSprite = new Sprite(selectSprite);
         }
 
-        public void set_Position(Vector2f Position)
+        public void set_position(Vector2f Position)
         {
-            this.Position = Position;
+            this._position = Position;
 
-            update_SpritesPosition();
-            update_DownRightCorner();
+            update_spritesPosition();
+            update_downRightCorner();
         }
 
-        public void set_Position(float x, float y)
+        public void set_position(float x, float y)
         {
-            Position.X = x;
-            Position.Y = y;
+            _position.X = x;
+            _position.Y = y;
 
-            update_SpritesPosition();
-            update_DownRightCorner();
+            update_spritesPosition();
+            update_downRightCorner();
         }
 
-        public void set_PositionX(float x)
+        public void set_positionX(float x)
         {
-            Position.X = x;
+            _position.X = x;
 
-            update_SpritesPosition();
-            update_DownRightCorner();
+            update_spritesPosition();
+            update_downRightCorner();
         }
 
-        public void set_PositionY(float y)
+        public void set_positionY(float y)
         {
-            Position.Y = y;
+            _position.Y = y;
 
-            update_SpritesPosition();
-            update_DownRightCorner();
+            update_spritesPosition();
+            update_downRightCorner();
         }
 
-        public float get_PositionX()
+        public float get_positionX()
         {
-            return Position.X;
+            return _position.X;
         }
-        public float get_PositionY()
+        public float get_positionY()
         {
-            return Position.Y;
+            return _position.Y;
         }
 
     }

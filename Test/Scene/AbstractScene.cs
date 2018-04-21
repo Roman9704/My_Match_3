@@ -4,8 +4,7 @@ namespace Test
 {
     abstract class AbstractScene
     {
-        protected bool SceneGenerate = false;
-        protected Background background = null;
+        protected Background _background = null;
 
         public abstract void Generate();
         public abstract void Destroy();
@@ -13,14 +12,5 @@ namespace Test
         public abstract void Draw();
         public abstract void Transition();
 
-        protected void set_SceneGenerate(bool ScG)
-        {
-            SceneGenerate = ScG;
-        }
-
-        public bool get_SceneGenerate()
-        {
-            return SceneGenerate;
-        }
     }
 }

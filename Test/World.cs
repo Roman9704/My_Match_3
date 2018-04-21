@@ -10,12 +10,12 @@ namespace Test
 {
     class World
     {
-        public const int AMOUNT_OF_ELEMENTS = 8;
-        static Vector2f Offset;
+        public const int AmountOfElements = 8;
+        static Vector2f _offset;
 
-        public static Element[,] elements = null;
+        public static Element[,] Elements = null;
 
-        static Random random = null;
+        static Random _random = null;
 
         public World()
         {
@@ -24,121 +24,127 @@ namespace Test
 
         public void Destroy()
         {
-            for (int y = 0; y < AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < AMOUNT_OF_ELEMENTS; x++)
-                    elements[y, x] = null;
-            elements = null;
+            for (int y = 0; y < AmountOfElements; y++)
+                for (int x = 0; x < AmountOfElements; x++)
+                {
+                    if (Elements[y, x] != null)
+                    {
+                        Elements[y, x].Destroy();
+                        Elements[y, x] = null;
+                    }
+                }
+            Elements = null;
             
-            random = null;
+            _random = null;
         }
 
         public void Update()
         {
-            for (int y = 0; y < AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < AMOUNT_OF_ELEMENTS; x++)
+            for (int y = 0; y < AmountOfElements; y++)
+                for (int x = 0; x < AmountOfElements; x++)
                 {
-                    if (elements[y, x] == null) { continue; }
+                    if (Elements[y, x] == null) { continue; }
 
-                    elements[y, x].Update();
+                    Elements[y, x].Update();
                 }
         }
 
         public void Draw()
         {
-            for (int y = 0; y < AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < AMOUNT_OF_ELEMENTS; x++)
+            for (int y = 0; y < AmountOfElements; y++)
+                for (int x = 0; x < AmountOfElements; x++)
                 {
-                    if (elements[y, x] == null) { continue; }
+                    if (Elements[y, x] == null) { continue; }
 
-                    elements[y, x].Draw();
+                    Elements[y, x].Draw();
                 }
         }
 
-        public void generate_Elements()
+        public void generateElements()
         {
-            elements = new Element[AMOUNT_OF_ELEMENTS, AMOUNT_OF_ELEMENTS];
-            Offset = new Vector2f(0, 60 + Grid.COORDINATE_SHIFT);
-            random = new Random();
+            Elements = new Element[AmountOfElements, AmountOfElements];
+            _offset = new Vector2f(0, Element.elementSize + Grid.coordinateShift);
+            _random = new Random();
 
-            for (int y = 0 ;y < AMOUNT_OF_ELEMENTS; y++)
-                for (int x = 0; x < AMOUNT_OF_ELEMENTS; x++)
-                    switch (random.Next(1, 6))
+            for (int y = 0 ;y < AmountOfElements; y++)
+                for (int x = 0; x < AmountOfElements; x++)
+                    switch (_random.Next(1, 6))
                     {
                         case 1:
-                            set_Element(ElementType.BLUE, x, y);
+                            setElement(ElementType.BLUE, x, y);
                             break;
                         case 2:
-                            set_Element(ElementType.GREEN, x, y);
+                            setElement(ElementType.GREEN, x, y);
                             break;
                         case 3:
-                            set_Element(ElementType.ORANGE, x, y);
+                            setElement(ElementType.ORANGE, x, y);
                             break;
                         case 4:
-                            set_Element(ElementType.PINK, x, y);
+                            setElement(ElementType.PINK, x, y);
                             break;
                         case 5:
-                            set_Element(ElementType.YELLOW, x, y);
+                            setElement(ElementType.YELLOW, x, y);
                             break;
                     }
         }
 
-        public static void swap_Elements(int x1, int y1, int x2, int y2)
+        public static void swapElements(int x1, int y1, int x2, int y2)
         {
             Element element;
 
-            element = elements[y1, x1];
+            element = Elements[y1, x1];
             
-            elements[y1, x1] = elements[y2, x2];
-            elements[y2, x2] = element;
+            Elements[y1, x1] = Elements[y2, x2];
+            Elements[y2, x2] = element;
         }
 
-        public static void spawn_Element(Cell cell)
+        public static void spawnElement(Cell cell)
         {
-            switch (random.Next(1, 6))
+            switch (_random.Next(1, 6))
             {
                 case 1:
-                    set_up_Element(ElementType.BLUE, cell.get_Position(), cell.get_IndicesX(), cell.get_IndicesY());
+                    setUpElement(ElementType.BLUE, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
                     break;
                 case 2:
-                    set_up_Element(ElementType.GREEN, cell.get_Position(), cell.get_IndicesX(), cell.get_IndicesY());
+                    setUpElement(ElementType.GREEN, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
                     break;
                 case 3:
-                    set_up_Element(ElementType.ORANGE, cell.get_Position(), cell.get_IndicesX(), cell.get_IndicesY());
+                    setUpElement(ElementType.ORANGE, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
                     break;
                 case 4:
-                    set_up_Element(ElementType.PINK, cell.get_Position(), cell.get_IndicesX(), cell.get_IndicesY());
+                    setUpElement(ElementType.PINK, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
                     break;
                 case 5:
-                    set_up_Element(ElementType.YELLOW, cell.get_Position(), cell.get_IndicesX(), cell.get_IndicesY());
+                    setUpElement(ElementType.YELLOW, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
                     break;
             }
 
-            cell.bind_Element(elements[cell.get_IndicesY(), cell.get_IndicesX()]);
+            cell.bind_element(Elements[cell.get_indicesY(), cell.get_indicesX()]);
         }
 
-        public Element[,] get_Elements()
+        public static void setUpElement(ElementType type, Vector2f Position, int x, int y)
         {
-            return elements;
+            Elements[y, x] = new Element(type, Position - _offset, Position,MoveType.DOWN);
         }
 
-        public static void set_up_Element(ElementType type, Vector2f Position, int x, int y)
+        public void setElement(ElementType type, int x, int y)
         {
-            elements[y, x] = new Element(type, Position - Offset, Position,MoveType.DOWN);
+            Elements[y, x] = new Element(type, Grid.get_position(x, y));
         }
 
-        public void set_Element(ElementType type, int x, int y)
+        public static void deleteElement(int x, int y)
         {
-            elements[y, x] = new Element(type, Grid.get_Position(x, y));
+            Elements[y, x] = null;
         }
 
-        public static void delete_Element(int x, int y)
+        public Element[,] getElements()
         {
-            elements[y, x] = null;
+            return Elements;
         }
 
-        public Element get_Element(int x, int y)
+        public Element getElement(int x, int y)
         {
-            return elements[y, x];
+            return Elements[y, x];
         }
     }
 }

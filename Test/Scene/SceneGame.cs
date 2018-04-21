@@ -6,10 +6,10 @@ namespace Test
 {
     class SceneGame : AbstractScene
     {
-        World world = null;
-        Grid grid = null;
-        GameLogic gameLogic = null;
-        GameInterface gameInterface = null;
+        World _world = null;
+        Grid _grid = null;
+        GameLogic _gameLogic = null;
+        GameInterface _gameInterface = null;
 
         public SceneGame()
         {
@@ -17,54 +17,54 @@ namespace Test
         }
         public override void Generate()
         {
-            background = new Background(BackgroundType.Turquoise);
+            _background = new Background(BackgroundType.Turquoise);
 
-            world = new World();
+            _world = new World();
 
-            grid = new Grid();
+            _grid = new Grid();
 
-            gameLogic = new GameLogic();
-            gameLogic.Generate();
+            _gameLogic = new GameLogic();
+            _gameLogic.Generate();
 
-            gameInterface = new GameInterface(this);
-            gameInterface.Generate();
+            _gameInterface = new GameInterface(this);
+            _gameInterface.Generate();
 
-            grid.generate_Cells();    // Создаем сетку из пустых клеток
-            world.generate_Elements();  // Создаем элементы по созданной сетке
-            grid.bind_Elements_to_Cells();   // Привязываем элементы к сетке
+            _grid.generate_cells();    // Создаем сетку из пустых клеток
+            _world.generateElements();  // Создаем элементы по созданной сетке
+            _grid.bind_Elements_to_Cells();   // Привязываем элементы к сетке
         }
 
         public override void Destroy()
         {
-            background = null;
+            _background = null;
 
-            world.Destroy();
-            world = null;
+            _world.Destroy();
+            _world = null;
 
-            gameLogic.Destroy();
-            gameLogic = null;
+            _gameLogic.Destroy();
+            _gameLogic = null;
 
-            gameInterface.Destroy();
-            gameInterface = null;
+            _gameInterface.Destroy();
+            _gameInterface = null;
         }
 
         public override void Update()
         {
-            gameLogic.Update();
-            world.Update();
-            gameInterface.Update();
+            _gameLogic.Update();
+            _world.Update();
+            _gameInterface.Update();
         }
 
         public override void Draw()
         {
-            background.Draw();
-            world.Draw();
-            gameInterface.Draw();
+            _background.Draw();
+            _world.Draw();
+            _gameInterface.Draw();
         }
 
         public override void Transition()
         {
-            Initializer.sceneHandler.Transition();
+            Initializer.SceneHandler.Transition();
         }
     }
 }

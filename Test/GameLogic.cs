@@ -10,14 +10,14 @@ namespace Test
     {
         public static bool AreElementsMove = false;
         public static bool DoEmptyCellsExist = false;
-        public static int SCORE = 0;
+        public static int Score = 0;
 
-        List<List<Cell>> VerticalChainCells = null;
-        List<List<Cell>> HorizontalChainCells = null;
-        List<Cell> EmptyCells = null;
-        List<Cell> NotEmptyCells = null;
+        List<List<Cell>> _verticalChainCells = null;
+        List<List<Cell>> _horizontalChainCells = null;
+        List<Cell> _emptyCells = null;
+        List<Cell> _notEmptyCells = null;
 
-        PlayerActions playerActions = null;
+        PlayerActions _playerActions = null;
 
         public GameLogic()
         {
@@ -26,25 +26,25 @@ namespace Test
 
         public void Generate()
         {
-            VerticalChainCells = new List<List<Cell>>();
-            for (int i = 0; i < World.AMOUNT_OF_ELEMENTS; i++)
+            _verticalChainCells = new List<List<Cell>>();
+            for (int i = 0; i < World.AmountOfElements; i++)
             {
-                VerticalChainCells.Add(new List<Cell>());
+                _verticalChainCells.Add(new List<Cell>());
             }
 
-            HorizontalChainCells = new List<List<Cell>>();
-            for (int i = 0; i < World.AMOUNT_OF_ELEMENTS; i++)
+            _horizontalChainCells = new List<List<Cell>>();
+            for (int i = 0; i < World.AmountOfElements; i++)
             {
-                HorizontalChainCells.Add(new List<Cell>());
+                _horizontalChainCells.Add(new List<Cell>());
             }
 
-            EmptyCells = new List<Cell>();
-            NotEmptyCells = new List<Cell>();
+            _emptyCells = new List<Cell>();
+            _notEmptyCells = new List<Cell>();
 
-            playerActions = new PlayerActions();
-            playerActions.Generate();
+            _playerActions = new PlayerActions();
+            _playerActions.Generate();
 
-            SCORE = 0;
+            Score = 0;
         }
 
         public void Destroy()
@@ -52,47 +52,47 @@ namespace Test
             AreElementsMove = false;
             DoEmptyCellsExist = false;
 
-            VerticalChainCells = null;
-            HorizontalChainCells = null;
-            EmptyCells = null;
-            NotEmptyCells = null;
+            _verticalChainCells = null;
+            _horizontalChainCells = null;
+            _emptyCells = null;
+            _notEmptyCells = null;
 
-            playerActions.Destroy();
-            playerActions = null;
+            _playerActions.Destroy();
+            _playerActions = null;
         }
 
         public void Update()
         {
-            update_AreElementsMove();
+            updateAreElementsMove();
 
             if (AreElementsMove == false)
             {
-                update_DoEmptyCellsExist();
+                updateDoEmptyCellsExist();
 
                 if (DoEmptyCellsExist)
                 {
-                    move_Cells_to_Holes();
+                    moveCellsToHoles();
                 }
                 else
                 {
-                    check_Cells_on_Chains();
+                    checkCellsOnChains();
 
-                    update_DoEmptyCellsExist();
+                    updateDoEmptyCellsExist();
                 }
             }
 
-            playerActions.Update();
+            _playerActions.Update();
         }
 
-        private void update_DoEmptyCellsExist()
+        private void updateDoEmptyCellsExist()
         {
             DoEmptyCellsExist = false;
 
-            for (int y = 0; y < World.AMOUNT_OF_ELEMENTS; y++)
+            for (int y = 0; y < World.AmountOfElements; y++)
             {
-                for (int x = 0; x < World.AMOUNT_OF_ELEMENTS; x++)
+                for (int x = 0; x < World.AmountOfElements; x++)
                 {
-                    if (Grid.cells[y, x].get_Element() == null)
+                    if (Grid.cells[y, x].get_element() == null)
                     {
                         DoEmptyCellsExist = true; 
                         break;
@@ -102,163 +102,163 @@ namespace Test
             }
         }
 
-        private void move_Cells_to_Holes()
+        private void moveCellsToHoles()
         {
-            for (int x = 0; x < World.AMOUNT_OF_ELEMENTS; x++)
+            for (int x = 0; x < World.AmountOfElements; x++)
             {
-                move_Cells_to_Holes_on_Vertical(x);
+                moveCellsToHolesOnVertical(x);
             }
         }
 
-        private void move_Cells_to_Holes_on_Vertical(int x)
+        private void moveCellsToHolesOnVertical(int x)
         {
-            EmptyCells.Clear();
-            NotEmptyCells.Clear();
+            _emptyCells.Clear();
+            _notEmptyCells.Clear();
 
-            for (int y =  0; y < World.AMOUNT_OF_ELEMENTS; y++) // В конце списка будут нижние элементы
+            for (int y =  0; y < World.AmountOfElements; y++) // В конце списка будут нижние элементы
             {
-                if (Grid.cells[y, x].get_Element() == null)
+                if (Grid.cells[y, x].get_element() == null)
                 {
-                    EmptyCells.Add(Grid.cells[y, x]);
+                    _emptyCells.Add(Grid.cells[y, x]);
                 }
                 else
                 {
-                    NotEmptyCells.Add(Grid.cells[y, x]);
+                    _notEmptyCells.Add(Grid.cells[y, x]);
                 }
             }
-            if (EmptyCells.Count > 0)
+            if (_emptyCells.Count > 0)
             {
-                for (int i = NotEmptyCells.Count - 1; i >= 0; i--)
+                for (int i = _notEmptyCells.Count - 1; i >= 0; i--)
                     {
-                        if (EmptyCells[EmptyCells.Count - 1].get_IndicesY() > NotEmptyCells[i].get_IndicesY())
+                        if (_emptyCells[_emptyCells.Count - 1].get_indicesY() > _notEmptyCells[i].get_indicesY())
                         {
-                            NotEmptyCells[i].get_Element().set_newPosition(EmptyCells[EmptyCells.Count - 1].get_Position());
-                            NotEmptyCells[i].get_Element().set_MoveType(MoveType.DOWN);
+                            _notEmptyCells[i].get_element().set_newPosition(_emptyCells[_emptyCells.Count - 1].get_position());
+                            _notEmptyCells[i].get_element().set_MoveType(MoveType.DOWN);
 
-                            EmptyCells[EmptyCells.Count - 1].change_bind_Element(NotEmptyCells[i].get_Element());
+                            _emptyCells[_emptyCells.Count - 1].changeBind_element(_notEmptyCells[i].get_element());
 
-                            NotEmptyCells[i].unbind_Element();
+                            _notEmptyCells[i].unbind_element();
 
-                            World.swap_Elements(NotEmptyCells[i].get_IndicesX(), NotEmptyCells[i].get_IndicesY(), EmptyCells[EmptyCells.Count - 1].get_IndicesX(), EmptyCells[EmptyCells.Count - 1].get_IndicesY());
+                            World.swapElements(_notEmptyCells[i].get_indicesX(), _notEmptyCells[i].get_indicesY(), _emptyCells[_emptyCells.Count - 1].get_indicesX(), _emptyCells[_emptyCells.Count - 1].get_indicesY());
 
-                            EmptyCells.Remove(EmptyCells[EmptyCells.Count - 1]);
+                            _emptyCells.Remove(_emptyCells[_emptyCells.Count - 1]);
                             break;
                         }
                     }
-                if (EmptyCells.Count > 0)
+                if (_emptyCells.Count > 0)
                 {
-                    if (Grid.cells[0, x].get_Element() == null)
+                    if (Grid.cells[0, x].get_element() == null)
                     {
-                        World.spawn_Element(Grid.cells[0, x]);
+                        World.spawnElement(Grid.cells[0, x]);
                     }
-                    move_Cells_to_Holes_on_Vertical(x);
+                    moveCellsToHolesOnVertical(x);
                 }
             }
         }
 
-        private void check_Cells_on_Chains()
+        private void checkCellsOnChains()
         {
             if (AreElementsMove != true)
             {
-                for (int y = 0; y < World.AMOUNT_OF_ELEMENTS; y++)
+                for (int y = 0; y < World.AmountOfElements; y++)
                 {
-                    check_Horizontal_on_Chains(y);
+                    checkHorizontalOnChains(y);
                 }
-                for (int x = 0; x < World.AMOUNT_OF_ELEMENTS; x++)
+                for (int x = 0; x < World.AmountOfElements; x++)
                 {
-                    check_Vertical_on_Chains(x);
+                    checkVerticalOnChains(x);
                 }
 
-                delete_Cells_in_ChainCells();
+                deleteCellsInChainCells();
             }
         }
 
-        private void check_Vertical_on_Chains(int x)
+        private void checkVerticalOnChains(int x)
         {
-            for (int y = World.AMOUNT_OF_ELEMENTS - 1; y > 1; y--)
+            for (int y = World.AmountOfElements - 1; y > 1; y--)
             {
-                if (Grid.cells[y, x].get_ElementType() != ElementType.NONE)
+                if (Grid.cells[y, x].get_elementType() != ElementType.NONE)
                 {
-                    if (Grid.cells[y, x].get_ElementType() == Grid.cells[y - 1, x].get_ElementType() && Grid.cells[y, x].get_ElementType() == Grid.cells[y - 2, x].get_ElementType())
+                    if (Grid.cells[y, x].get_elementType() == Grid.cells[y - 1, x].get_elementType() && Grid.cells[y, x].get_elementType() == Grid.cells[y - 2, x].get_elementType())
                     {
-                        if (!VerticalChainCells[x].Contains(Grid.cells[y, x]))
+                        if (!_verticalChainCells[x].Contains(Grid.cells[y, x]))
                         {
-                            VerticalChainCells[x].Add(Grid.cells[y, x]);
+                            _verticalChainCells[x].Add(Grid.cells[y, x]);
                         }
-                        if (!VerticalChainCells[x].Contains(Grid.cells[y - 1, x]))
+                        if (!_verticalChainCells[x].Contains(Grid.cells[y - 1, x]))
                         {
-                            VerticalChainCells[x].Add(Grid.cells[y - 1, x]);
+                            _verticalChainCells[x].Add(Grid.cells[y - 1, x]);
                         }
-                        VerticalChainCells[x].Add(Grid.cells[y - 2, x]);
+                        _verticalChainCells[x].Add(Grid.cells[y - 2, x]);
                     }
                 }
             }
         }
 
-        private void check_Horizontal_on_Chains(int y)
+        private void checkHorizontalOnChains(int y)
         {
-            for (int x = World.AMOUNT_OF_ELEMENTS - 1; x > 1; x--)
+            for (int x = World.AmountOfElements - 1; x > 1; x--)
             {
-                if (Grid.cells[y, x].get_ElementType() != ElementType.NONE)
+                if (Grid.cells[y, x].get_elementType() != ElementType.NONE)
                 {
-                    if (Grid.cells[y, x].get_ElementType() == Grid.cells[y, x - 1].get_ElementType() && Grid.cells[y, x].get_ElementType() == Grid.cells[y, x - 2].get_ElementType())
+                    if (Grid.cells[y, x].get_elementType() == Grid.cells[y, x - 1].get_elementType() && Grid.cells[y, x].get_elementType() == Grid.cells[y, x - 2].get_elementType())
                     {
-                        if (!HorizontalChainCells[y].Contains(Grid.cells[y, x]))
+                        if (!_horizontalChainCells[y].Contains(Grid.cells[y, x]))
                         {
-                            HorizontalChainCells[y].Add(Grid.cells[y, x]);
+                            _horizontalChainCells[y].Add(Grid.cells[y, x]);
                         }
-                        if (!HorizontalChainCells[y].Contains(Grid.cells[y, x - 1]))
+                        if (!_horizontalChainCells[y].Contains(Grid.cells[y, x - 1]))
                         {
-                            HorizontalChainCells[y].Add(Grid.cells[y, x - 1]);
+                            _horizontalChainCells[y].Add(Grid.cells[y, x - 1]);
                         }
-                        HorizontalChainCells[y].Add(Grid.cells[y, x - 2]);
+                        _horizontalChainCells[y].Add(Grid.cells[y, x - 2]);
                     }
                 }
             }
         }
 
-        private void delete_Cells_in_ChainCells()
+        private void deleteCellsInChainCells()
         {
-            for (int i = VerticalChainCells.Count - 1; i >= 0 ; i--)
+            for (int i = _verticalChainCells.Count - 1; i >= 0 ; i--)
             {
-                for (int j = VerticalChainCells[i].Count - 1; j >= 0; j--)
+                for (int j = _verticalChainCells[i].Count - 1; j >= 0; j--)
                 {
-                    if (VerticalChainCells[i][j].get_Element() != null)
+                    if (_verticalChainCells[i][j].get_element() != null)
                     {
-                        SCORE += VerticalChainCells[i][j].get_Element().get_POINTS();
-                        VerticalChainCells[i][j].unbind_Element();
-                        World.delete_Element(VerticalChainCells[i][j].get_IndicesX(), VerticalChainCells[i][j].get_IndicesY());
+                        Score += _verticalChainCells[i][j].get_element().get_POINTS();
+                        _verticalChainCells[i][j].unbind_element();
+                        World.deleteElement(_verticalChainCells[i][j].get_indicesX(), _verticalChainCells[i][j].get_indicesY());
                     }
                 }
-                VerticalChainCells[i].Clear();
+                _verticalChainCells[i].Clear();
             }
 
-            for (int i = HorizontalChainCells.Count - 1; i >= 0; i--)
+            for (int i = _horizontalChainCells.Count - 1; i >= 0; i--)
             {
-                for (int j = HorizontalChainCells[i].Count - 1; j >= 0; j--)
+                for (int j = _horizontalChainCells[i].Count - 1; j >= 0; j--)
                 {
-                    if (HorizontalChainCells[i][j].get_Element() != null)
+                    if (_horizontalChainCells[i][j].get_element() != null)
                     {
-                        SCORE += HorizontalChainCells[i][j].get_Element().get_POINTS();
-                        HorizontalChainCells[i][j].unbind_Element();
-                        World.delete_Element(HorizontalChainCells[i][j].get_IndicesX(), HorizontalChainCells[i][j].get_IndicesY());
+                        Score += _horizontalChainCells[i][j].get_element().get_POINTS();
+                        _horizontalChainCells[i][j].unbind_element();
+                        World.deleteElement(_horizontalChainCells[i][j].get_indicesX(), _horizontalChainCells[i][j].get_indicesY());
                     }
                 }
-                HorizontalChainCells[i].Clear();
+                _horizontalChainCells[i].Clear();
             }
         }
 
-        private void update_AreElementsMove()
+        private void updateAreElementsMove()
         {
             AreElementsMove = false;
 
-            for (int y = 0; y < World.AMOUNT_OF_ELEMENTS; y++)
+            for (int y = 0; y < World.AmountOfElements; y++)
             {
-                for (int x = 0; x <World.AMOUNT_OF_ELEMENTS; x++)
+                for (int x = 0; x <World.AmountOfElements; x++)
                 {
-                    if (Grid.cells[y, x].get_Element() == null) { continue; }
+                    if (Grid.cells[y, x].get_element() == null) { continue; }
 
-                    if (Grid.cells[y, x].get_Element().get_MoveType() != MoveType.NONE)
+                    if (Grid.cells[y, x].get_element().get_MoveType() != MoveType.NONE)
                     {
                         AreElementsMove = true;
                         break;
@@ -266,21 +266,6 @@ namespace Test
                 }
                 if (AreElementsMove) { break; }
             }
-        }
-
-        public bool get_DoEmptyCellsExist()
-        {
-            return DoEmptyCellsExist;
-        }
-
-        public bool get_AreElementsMove()
-        {
-            return AreElementsMove;
-        }
-
-        public PlayerActions get_PlayerActions()
-        {
-            return playerActions;
         }
     }
 }

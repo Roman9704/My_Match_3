@@ -5,7 +5,7 @@ namespace Test
 {
     abstract class AbstractGUI
     {
-        protected List<AbstractGUIElement> GUIElements = null;
+        protected List<AbstractGUIElement> _guiElements = null;
 
         public abstract void Destroy();
         public abstract void Generate();

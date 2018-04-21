@@ -11,19 +11,19 @@ namespace Test
     {
         public ButtonOk()
         {
-            set_WIDTH(60);
-            set_HEIGHT(60);
-            set_Sprite(Content.ButtonOkSprite);
-            set_SelectSprite(Content.ButtonOkSelectSprite);
+            set_width(60);
+            set_height(60);
+            set_sprite(Content.ButtonOkSprite);
+            set_selectSprite(Content.ButtonOkSelectSprite);
 
-            Initializer.window.MouseMoved += update_Selected;
-            Initializer.window.MouseButtonPressed += update_Clicked;
+            Initializer.Window.MouseMoved += update_selected;
+            Initializer.Window.MouseButtonPressed += updateClicked;
         }
 
         ~ButtonOk()
         {
-            Initializer.window.MouseMoved -= update_Selected;
-            Initializer.window.MouseButtonPressed -= update_Clicked;
+            Initializer.Window.MouseMoved -= update_selected;
+            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         public override void Update()
@@ -33,13 +33,13 @@ namespace Test
 
         public override void Draw()
         {
-            if (SELECTED)
+            if (_selected)
             {
-                Initializer.window.Draw(SelectSprite);
+                Initializer.Window.Draw(_selectSprite);
             }
             else
             {
-                Initializer.window.Draw(Sprite);
+                Initializer.Window.Draw(_sprite);
             }
         }
     }

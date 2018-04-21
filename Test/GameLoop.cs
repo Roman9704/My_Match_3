@@ -5,38 +5,38 @@ namespace Test
 {
     class GameLoop
     {
-        Clock clock;
+        Clock _clock;
         public static float dt = 0;
         //const float DENOMINATOR = 1;
 
         public GameLoop()
         {
-            clock = new Clock();
+            _clock = new Clock();
         }
 
         public void Update()
         {
-            while (Initializer.window.IsOpen)
+            while (Initializer.Window.IsOpen)
             {
-                Initializer.window.DispatchEvents();
+                Initializer.Window.DispatchEvents();
 
-                if (Initializer.window.HasFocus())
+                update_dt();
+
+                if (Initializer.Window.HasFocus())
                 {
-                    update_time();
+                    Initializer.SceneHandler.Update();
 
-                    Initializer.sceneHandler.Update();
+                    Initializer.SceneHandler.Draw();
 
-                    Initializer.sceneHandler.Draw();
-
-                    Initializer.window.Display();
+                    Initializer.Window.Display();
                 }
             }
         }
 
-        private void update_time()
+        private void update_dt()
         {
-            dt = clock.ElapsedTime.AsSeconds();
-            clock.Restart();
+            dt = _clock.ElapsedTime.AsSeconds();
+            _clock.Restart();
             //dt /= DENOMINATOR; // Скорость игры
         }
     }

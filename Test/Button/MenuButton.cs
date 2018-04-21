@@ -6,20 +6,20 @@ namespace Test
     {
         public MenuButton()
         {
-            set_WIDTH(120);
-            set_HEIGHT(60);
-            set_Sprite(Content.ButtonSprite0);
-            set_SelectSprite(Content.ButtonSprite1);
-            set_Position(Initializer.WINDOW_WIDTH / 2 - WIDTH / 2, Initializer.WINDOW_HEIGHT / 2 - HEIGHT / 2);
+            set_width(120);
+            set_height(60);
+            set_sprite(Content.ButtonSprite0);
+            set_selectSprite(Content.ButtonSprite1);
+            set_position(Initializer.WindowWidth / 2 - _width / 2, Initializer.WindowHeight / 2 - _height / 2);
 
-            Initializer.window.MouseMoved += update_Selected;
-            Initializer.window.MouseButtonPressed += update_Clicked;
+            Initializer.Window.MouseMoved += update_selected;
+            Initializer.Window.MouseButtonPressed += updateClicked;
         }
 
         ~MenuButton()
         {
-            Initializer.window.MouseMoved -= update_Selected;
-            Initializer.window.MouseButtonPressed -= update_Clicked;
+            Initializer.Window.MouseMoved -= update_selected;
+            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         public override void Update()
@@ -29,13 +29,13 @@ namespace Test
 
         public override void Draw()
         {
-            if (SELECTED)
+            if (_selected)
             {
-                Initializer.window.Draw(SelectSprite);
+                Initializer.Window.Draw(_selectSprite);
             }
             else
             {
-                Initializer.window.Draw(Sprite);
+                Initializer.Window.Draw(_sprite);
             }
         }
     }

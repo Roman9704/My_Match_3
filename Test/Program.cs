@@ -6,7 +6,7 @@
         {
             Initializer.initialization();
 
-            Initializer.gameLoop.Update();
+            Initializer.GameLoop.Update();
         }
     }
 }

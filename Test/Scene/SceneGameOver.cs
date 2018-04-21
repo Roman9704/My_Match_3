@@ -10,7 +10,7 @@ namespace Test
         Text textGameOver = null;
         Text textYourScore = null;
 
-        const int sizeText = World.AMOUNT_OF_ELEMENTS * 6;
+        const int sizeText = World.AmountOfElements * 6;
 
         Color textColor = new Color(254, 216, 1);
 
@@ -21,22 +21,25 @@ namespace Test
 
         public override void Generate()
         {
-            background = new Background(BackgroundType.DarkPurple);
+            _background = new Background(BackgroundType.DarkPurple);
 
-            textGameOver = new Text("Game Over", Content.font, sizeText);
-            textGameOver.Position = new Vector2f(Initializer.WINDOW_WIDTH / 2 - sizeText * 2.8f, Initializer.WINDOW_HEIGHT / 2 - sizeText * 2);
+            textGameOver = new Text("Game Over", Content.Font, sizeText);
+            textGameOver.Position = new Vector2f(Initializer.WindowWidth / 2 - sizeText * 2.8f, Initializer.WindowHeight / 2 - sizeText * 2);
 
-            textYourScore = new Text("Your score: " + GameLogic.SCORE.ToString(), Content.font, sizeText);
+            textYourScore = new Text("Your score: " + GameLogic.Score.ToString(), Content.Font, sizeText);
             textYourScore.Position = new Vector2f(textGameOver.Position.X - sizeText * 1.5f, textGameOver.Position.Y + sizeText * 1.5f);
             textYourScore.Color = textColor;
 
             buttonOk = new ButtonOk();
-            buttonOk.set_Position(Initializer.WINDOW_WIDTH / 2 - 60 / 2, textYourScore.Position.Y + 60 / 2 + sizeText * 1.5f);
+            buttonOk.set_position(Initializer.WindowWidth / 2 - 60 / 2, textYourScore.Position.Y + 60 / 2 + sizeText * 1.5f);
             buttonOk.Clicked += Transition;
         }
 
         public override void Destroy()
         {
+            _background = null;
+
+            buttonOk.Clicked -= Transition;
             buttonOk = null;
 
             textGameOver = null;
@@ -50,16 +53,16 @@ namespace Test
 
         public override void Draw()
         {
-            background.Draw();
+            _background.Draw();
             buttonOk.Draw();
-            Initializer.window.Draw(textGameOver);
-            Initializer.window.Draw(textYourScore);
+            Initializer.Window.Draw(textGameOver);
+            Initializer.Window.Draw(textYourScore);
         }
 
         public override void Transition()
         {
             buttonOk.Clicked -= Transition;
-            Initializer.sceneHandler.Transition();
+            Initializer.SceneHandler.Transition();
         }
     }
 }

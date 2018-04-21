@@ -10,12 +10,12 @@ namespace Test
 {
     abstract class AbstractGUIElement
     {
-        public abstract void set_Position(Vector2f Position);
-        public abstract void set_PositionX(float X);
-        public abstract void set_PositionY(float Y);
-        public abstract Vector2f get_Position();
-        public abstract float get_PositionX();
-        public abstract float get_PositionY();
+        public abstract void set_position(Vector2f Position);
+        public abstract void set_positionX(float X);
+        public abstract void set_positionY(float Y);
+        public abstract Vector2f get_position();
+        public abstract float get_positionX();
+        public abstract float get_positionY();
 
         public abstract void Draw();
         public virtual void Update() { }

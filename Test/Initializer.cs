@@ -1,52 +1,52 @@
 ﻿using System;
 
 using SFML.Graphics;
-using SFML.Window;
 
 namespace Test
 {
-    class Initializer
+    static class Initializer
     {
-        public const uint WINDOW_WIDTH = ((uint)Element.ELEMENT_SIZE + Grid.PARTITION_WIDTH) * World.AMOUNT_OF_ELEMENTS + Grid.COORDINATE_SHIFT;
-        public const uint WINDOW_HEIGHT = WINDOW_WIDTH + GameInterface.HEIGHT_Timer_and_Score;
+        public const uint WindowWidth = ((uint)Element.elementSize + Grid.partitionWidth) * World.AmountOfElements + Grid.coordinateShift;
+        public const uint WindowHeight = WindowWidth + GameInterface.heightTimerAndScore;
 
-        public static RenderWindow window = null;
-        public static SceneHandler sceneHandler = null;
-        public static GameLoop gameLoop = null;
+        public static RenderWindow Window = null;
+        public static SceneHandler SceneHandler = null;
+        public static GameLoop GameLoop = null;
 
         public static void initialization()
         {
-            init_Window();
-            init_Content();
-            init_SceneHandler();
-            init_GameLoop();
+            initWindow();
+            initContent();
+            initSceneHandler();
+            initGameLoop();
         }
 
-        private static void init_Window()
+        private static void initWindow()
         {
-            window = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Test task for Summer practice, by Anoshin Roman");
-            window.SetVerticalSyncEnabled(true);
+            Window = new RenderWindow(new SFML.Window.VideoMode(WindowWidth, WindowHeight), "Test task for Summer practice, by Anoshin Roman");
+            Window.SetVerticalSyncEnabled(true);
+            //window.SetFramerateLimit(60);
 
-            window.Closed += Window_Closed;
+            Window.Closed += WindowClosed;
         }
         
-        private static void init_Content()
+        private static void initContent()
         {
             Content.Load();
         }
-        private static void init_SceneHandler()
+        private static void initSceneHandler()
         {
-            sceneHandler = new SceneHandler();
+            SceneHandler = new SceneHandler();
         }
 
-        private static void init_GameLoop()
+        private static void initGameLoop()
         {
-            gameLoop = new GameLoop();
+            GameLoop = new GameLoop();
         }
 
-        private static void Window_Closed(object sender, EventArgs e)
+        private static void WindowClosed(object sender, EventArgs e)
         {
-            window.Close();
+            Window.Close();
         }
     }
 }

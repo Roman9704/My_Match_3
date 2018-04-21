@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-
-using SFML.System;
+﻿using SFML.System;
 using SFML.Graphics;
+using System;
 
 
 namespace Test
@@ -15,64 +14,59 @@ namespace Test
 
     class SceneHandler
     {
-        AbstractScene scene = null;
-        SceneType CurrentScene;
+        AbstractScene _scene = null;
+        SceneType _currentScene;
 
         public SceneHandler()
         {
-            set_CurrentScene(SceneType.GameMenu);
-            scene = new SceneGameMenu();
-            scene.Generate();
+            set_currentScene(SceneType.GameMenu);
+            _scene = new SceneGameMenu();
+            _scene.Generate();
         }
 
         public void Update()
         {
-            scene.Update();
+            _scene.Update();
         }
 
         public void Draw()
         {
-            scene.Draw();
+            _scene.Draw();
         }
 
 
         public void Transition()
         {
-            scene.Destroy();
+            _scene.Destroy();
 
-            if (CurrentScene == SceneType.GameOver)
+            if (_currentScene == SceneType.GameOver)
             {
-                CurrentScene = SceneType.GameMenu;
-                scene = new SceneGameMenu();
+                _currentScene = SceneType.GameMenu;
+                _scene = new SceneGameMenu();
             }
             else
             {
-                CurrentScene++;
-                if (CurrentScene == SceneType.Game)
+                _currentScene++;
+                if (_currentScene == SceneType.Game)
                 {
-                    scene = new SceneGame();
+                    _scene = new SceneGame();
                 }
                 else
                 {
-                    scene = new SceneGameOver();
+                    _scene = new SceneGameOver();
                 }
             }
 
-            scene.Generate();
+            _scene.Generate();
         }
 
-        private void set_CurrentScene(SceneType type)
+        private void set_currentScene(SceneType type)
         {
-            CurrentScene = type;
-
-            //if (scenes[(int)CurrentScene].get_SceneGenerate() == false)//если сцена уже была сгенерирована, чтобы заново не генерировать и продолжить
-            //{
-                //scenes[(int)CurrentScene].Generate();
-            //}
+            _currentScene = type;
         }
-        public SceneType get_CurrentScene()
+        public SceneType get_currentScene()
         {
-            return CurrentScene;
+            return _currentScene;
         }
     }
 }

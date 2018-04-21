@@ -16,14 +16,15 @@ namespace Test
             menuButton = new MenuButton();
             menuButton.Clicked += Transition;
 
-            background = new Background();
+            _background = new Background(BackgroundType.DarkPurple);
         }
 
         public override void Destroy()
         {
+            menuButton.Clicked -= Transition;
             menuButton = null;
 
-            background = null;
+            _background = null;
         }
 
         public override void Update()
@@ -33,14 +34,14 @@ namespace Test
 
         public override void Draw()
         {
-            background.Draw();
+            _background.Draw();
             menuButton.Draw();
         }
 
         public override void Transition()
         {
             menuButton.Clicked -= Transition;
-            Initializer.sceneHandler.Transition();
+            Initializer.SceneHandler.Transition();
         }
     }
 }

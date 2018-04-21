@@ -16,17 +16,10 @@ namespace Test
 
     class Background
     {
-        BackgroundType type;
+        BackgroundType _type;
 
-        Color ClearColor;
-        Color colorDarkPurple = new Color(48, 10, 36);
-        Color colorTurquoise = new Color(207, 245, 219);
-        
-        public Background()
-        {
-            set_BackgroundType(BackgroundType.DarkPurple);
-            set_ClearColor(colorDarkPurple);
-        }
+        Color _clearColor;
+
         public Background(BackgroundType type)
         {
             set_BackgroundType(type);
@@ -34,47 +27,39 @@ namespace Test
 
         public void set_BackgroundType(BackgroundType type)
         {
-            this.type = type;
+            this._type = type;
 
-            switch (type)
-            {
-                case BackgroundType.DarkPurple:
-                    ClearColor = colorDarkPurple;
-                    break;
-                case BackgroundType.Turquoise:
-                    ClearColor = colorTurquoise;
-                    break;
-            }
+            _clearColor = Content.ListOfColors[(int)type];
         }
         public BackgroundType get_BackgroundType()
         {
-            return type;
+            return _type;
         }
         public void change_BackgroundType()
         {
-            if (type == BackgroundType.DarkPurple)
+            if (_type == BackgroundType.DarkPurple)
             {
                 set_BackgroundType(BackgroundType.Turquoise);
-                ClearColor = colorDarkPurple;
+                _clearColor = Content.ListOfColors[(int)BackgroundType.Turquoise];
             }
             else
             {
                 set_BackgroundType(BackgroundType.DarkPurple);
-                ClearColor = colorTurquoise;
+                _clearColor = Content.ListOfColors[(int)BackgroundType.DarkPurple];
             }
         }
-        public void set_ClearColor(Color ClearColor)
+        public void set_clearColor(Color ClearColor)
         {
-            this.ClearColor = ClearColor;
+            this._clearColor = ClearColor;
         }
-        public Color get_ClearColor()
+        public Color get_clearColor()
         {
-            return ClearColor;
+            return _clearColor;
         }
 
         public void Draw()
         {
-            Initializer.window.Clear(ClearColor);
+            Initializer.Window.Clear(_clearColor);
         }
     }
 }

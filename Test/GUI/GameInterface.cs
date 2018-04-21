@@ -6,15 +6,15 @@ namespace Test
 {
     class GameInterface : AbstractGUI
     {
-        public const uint HEIGHT_Timer_and_Score = World.AMOUNT_OF_ELEMENTS * 10;
+        public const uint heightTimerAndScore = World.AmountOfElements * 10;
 
-        AbstractScene scene = null;
+        AbstractScene _scene = null;
 
         Text textScore = null;
         Text textTimer = null;
         float timerTime = 240;
 
-        const int sizeText = World.AMOUNT_OF_ELEMENTS * 4;
+        const int sizeText = World.AmountOfElements * 4;
         Color textColor = new Color(48, 10, 36);
 
         public GameInterface(AbstractScene scene)
@@ -24,18 +24,18 @@ namespace Test
 
         public override void Generate()
         {
-            textScore = new Text("Score: ", Content.font, sizeText);
-            textScore.Position = new Vector2f(Initializer.WINDOW_WIDTH / 2 + 15, Initializer.WINDOW_HEIGHT - sizeText * 2);
+            textScore = new Text("Score: ", Content.Font, sizeText);
+            textScore.Position = new Vector2f(Initializer.WindowWidth / 2 + 45, Initializer.WindowHeight - sizeText * 2);
             textScore.Color = textColor;
 
-            textTimer = new Text("Timer: ", Content.font, sizeText);
-            textTimer.Position = new Vector2f(15, Initializer.WINDOW_HEIGHT - sizeText * 2);
+            textTimer = new Text("Timer: ", Content.Font, sizeText);
+            textTimer.Position = new Vector2f(15, Initializer.WindowHeight - sizeText * 2);
             textTimer.Color = textColor;
         }
 
         public override void Destroy()
         {
-            scene = null;
+            _scene = null;
 
             textScore = null;
             textTimer = null;
@@ -43,24 +43,24 @@ namespace Test
 
         public override void Update()
         {
-            textScore.DisplayedString = "Score: " + GameLogic.SCORE.ToString();
+            textScore.DisplayedString = "Score: " + GameLogic.Score.ToString();
             timerTime -= GameLoop.dt;
             textTimer.DisplayedString = "Timer: " + Convert.ToInt32(timerTime).ToString() + "sec.";
             if (timerTime <= 0)
             {
-                scene.Transition();
+                _scene.Transition();
             }
         }
 
         public override void Draw()
         {
-            Initializer.window.Draw(textTimer);
-            Initializer.window.Draw(textScore);
+            Initializer.Window.Draw(textTimer);
+            Initializer.Window.Draw(textScore);
         }
 
         private void set_Scene(AbstractScene scene)
         {
-            this.scene = scene;
+            this._scene = scene;
         }
     }
 }
