@@ -69,24 +69,7 @@ namespace Test
 
             for (int y = 0 ;y < AmountOfElements; y++)
                 for (int x = 0; x < AmountOfElements; x++)
-                    switch (_random.Next(1, 6))
-                    {
-                        case 1:
-                            setElement(ElementType.BLUE, x, y);
-                            break;
-                        case 2:
-                            setElement(ElementType.GREEN, x, y);
-                            break;
-                        case 3:
-                            setElement(ElementType.ORANGE, x, y);
-                            break;
-                        case 4:
-                            setElement(ElementType.PINK, x, y);
-                            break;
-                        case 5:
-                            setElement(ElementType.YELLOW, x, y);
-                            break;
-                    }
+                    setElement((ElementType)_random.Next(1, 6), x, y);
         }
 
         public static void swapElements(int x1, int y1, int x2, int y2)
@@ -101,25 +84,8 @@ namespace Test
 
         public static void spawnElement(Cell cell)
         {
-            switch (_random.Next(1, 6))
-            {
-                case 1:
-                    setUpElement(ElementType.BLUE, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
-                    break;
-                case 2:
-                    setUpElement(ElementType.GREEN, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
-                    break;
-                case 3:
-                    setUpElement(ElementType.ORANGE, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
-                    break;
-                case 4:
-                    setUpElement(ElementType.PINK, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
-                    break;
-                case 5:
-                    setUpElement(ElementType.YELLOW, cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
-                    break;
-            }
-
+            setUpElement((ElementType)_random.Next(1, 6), cell.get_position(), cell.get_indicesX(), cell.get_indicesY());
+                    
             cell.bind_element(Elements[cell.get_indicesY(), cell.get_indicesX()]);
         }
 
