@@ -53,9 +53,16 @@ namespace Test
             AreElementsMove = false;
             DoEmptyCellsExist = false;
 
+            _verticalChainCells.Clear();
             _verticalChainCells = null;
+
+            _horizontalChainCells.Clear();
             _horizontalChainCells = null;
+
+            _emptyCells.Clear();
             _emptyCells = null;
+
+            _notEmptyCells.Clear();
             _notEmptyCells = null;
 
             _playerActions.Destroy();
