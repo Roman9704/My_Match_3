@@ -1,18 +1,20 @@
-﻿using SFML.Graphics;
+﻿using System;
+using System.Collections.Generic;
+
+using SFML.Graphics;
 using SFML.System;
-using System;
+
 using Test.Button;
+using Test.GUI.GUIElement;
 
 namespace Test.GUI
 {
     class GameOverInterface : AbstractGUI
     {
+        List<Inscription> _listOfInscriptions = null;
         ButtonOk buttonOk = null;
 
-        Text textGameOver = null;
-        Text textYourScore = null;
-
-        const int sizeText = World.AmountOfElements * 6;
+        const int _sizeText = World.AmountOfElements * 6;
 
         public GameOverInterface(Test.Scene.AbstractScene scene)
         {
@@ -21,15 +23,17 @@ namespace Test.GUI
 
         public override void Generate()
         {
-            textGameOver = new Text("Game Over", Content.Font, sizeText);
-            textGameOver.Position = new Vector2f(Initializer.WindowWidth / 2 - sizeText * 2.8f, Initializer.WindowHeight / 2 - sizeText * 2);
+            _listOfInscriptions = new List<Inscription>();
 
-            textYourScore = new Text("Your score: " + GameLogic.Score.ToString(), Content.Font, sizeText);
-            textYourScore.Position = new Vector2f(textGameOver.Position.X - sizeText * 1.5f, textGameOver.Position.Y + sizeText * 1.5f);
-            textYourScore.Color = new Color(254, 216, 1);
+            _listOfInscriptions.Add(new Inscription("Game Over", Content.Font, _sizeText));
+            _listOfInscriptions[0].set_position(new Vector2f(Initializer.WindowWidth / 2 - _sizeText * 2.8f, Initializer.WindowHeight / 2 - _sizeText * 2));
+
+            _listOfInscriptions.Add(new Inscription("Your score: " + GameLogic.Score.ToString(), Content.Font, _sizeText));
+            _listOfInscriptions[1].set_position(new Vector2f(_listOfInscriptions[0].get_positionX() - _sizeText * 1.5f, _listOfInscriptions[0].get_positionY() + _sizeText * 1.5f));
+            _listOfInscriptions[1].set_color(new Color(254, 216, 1));
 
             buttonOk = new ButtonOk();
-            buttonOk.set_position(Initializer.WindowWidth / 2 - 60 / 2, textYourScore.Position.Y + 60 / 2 + sizeText * 1.5f);
+            buttonOk.set_position(Initializer.WindowWidth / 2 - 60 / 2, _listOfInscriptions[1].get_positionY() + 60 / 2 + _sizeText * 1.5f);
             buttonOk.Clicked += _scene.Transition;
         }
 
@@ -38,8 +42,8 @@ namespace Test.GUI
             buttonOk.Clicked -= _scene.Transition;
             buttonOk = null;
 
-            textGameOver = null;
-            textYourScore = null;   
+            _listOfInscriptions.Clear();
+            _listOfInscriptions = null;
         }
 
         public override void Update()
@@ -50,8 +54,10 @@ namespace Test.GUI
         public override void Draw()
         {
             buttonOk.Draw();
-            Initializer.Window.Draw(textGameOver);
-            Initializer.Window.Draw(textYourScore);
+            for (int i = 0; i < _listOfInscriptions.Count; i++)
+            {
+                _listOfInscriptions[i].Draw();
+            }
         }
     }
 }
