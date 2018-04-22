@@ -38,6 +38,9 @@ namespace Test.Scene
         {
             _background = null;
 
+            _grid.Destroy();
+            _grid = null;
+
             _world.Destroy();
             _world = null;
 
