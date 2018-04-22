@@ -1,6 +1,6 @@
 ﻿using SFML.Graphics;
 
-namespace Test
+namespace Test.Button
 {
     class MenuButton : AbstractRectangularButton
     {

@@ -1,10 +1,10 @@
 ﻿using SFML.Graphics;
 
-namespace Test
+namespace Test.Scene
 {
     class SceneGameMenu : AbstractScene
     {
-        MenuButton menuButton = null;
+        
 
         public SceneGameMenu()
         {
@@ -13,34 +13,33 @@ namespace Test
 
         public override void Generate()
         {
-            menuButton = new MenuButton();
-            menuButton.Clicked += Transition;
-
             _background = new Background(BackgroundType.DarkPurple);
+
+            _gui = new GUI.GameMenuInterface(this);
+            _gui.Generate();
         }
 
         public override void Destroy()
         {
-            menuButton.Clicked -= Transition;
-            menuButton = null;
+             _background = null;
 
-            _background = null;
+            _gui.Destroy();
+            _gui = null;
         }
 
         public override void Update()
         {
-
+            _gui.Update();
         }
 
         public override void Draw()
         {
             _background.Draw();
-            menuButton.Draw();
+            _gui.Draw();
         }
 
         public override void Transition()
         {
-            menuButton.Clicked -= Transition;
             Initializer.SceneHandler.Transition();
         }
     }

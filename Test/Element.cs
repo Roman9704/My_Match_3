@@ -1,6 +1,7 @@
 ﻿using SFML.System;
 using SFML.Graphics;
 using SFML.Window;
+using Test.Button;
 
 namespace Test
 {
@@ -23,181 +24,186 @@ namespace Test
         RIGHT
     }
 
-    class Element : ARectangularButton
+    class Element : AbstractRectangularButton
     {
-        public const float ELEMENT_MOVE_SPEED = 155f;
-        const int POINTS = 50;
+        public const int ElementSize = 60;
+        public const float ElementMoveSpeed = 200f;
+        const int Points = 1;
 
-        ElementType type = ElementType.NONE;
-        MoveType moveType = MoveType.NONE;
-        Vector2f newPosition;
+        ElementType _type = ElementType.NONE;
+        MoveType _moveType = MoveType.NONE;
+        Vector2f _newPosition;
 
         public Element(ElementType type, Vector2f Position)
         {
-            set_Window(Initializer.window);
-            set_WIDTH(60);
-            set_HEIGHT(60);
-            set_ElementType(type);
+            set_width(ElementSize);
+            set_height(ElementSize);
+            set_elementType(type);
 
 
-            set_Sprite(Content.ElementSprite[(int)type]);
-            set_SelectSprite(Content.SelectSprite);
-            set_Position(Position);
+            set_sprite(Content.ElementSprite[(int)type]);
+            set_selectSprite(Content.SelectSprite);
+            set_position(Position);
 
-            window.MouseMoved += update_Selected;
-            window.MouseButtonPressed += update_Clicked;
+            Initializer.Window.MouseMoved += update_selected;
+            Initializer.Window.MouseButtonPressed += updateClicked;
         }
 
         public Element(ElementType type, Vector2f Position, Vector2f newPosition, MoveType moveType)
         {
-            set_Window(Initializer.window);
-            set_WIDTH(60);
-            set_HEIGHT(60);
-            set_ElementType(type);
+            set_width(ElementSize);
+            set_height(ElementSize);
+            set_elementType(type);
 
-            set_Sprite(Content.ElementSprite[(int)type]);
-            set_SelectSprite(Content.SelectSprite);
-            set_Position(Position);
+            set_sprite(Content.ElementSprite[(int)type]);
+            set_selectSprite(Content.SelectSprite);
+            set_position(Position);
             set_newPosition(newPosition);
-            set_MoveType(moveType);
+            set_moveType(moveType);
 
-            window.MouseMoved += update_Selected;
-            window.MouseButtonPressed += update_Clicked;
+            Initializer.Window.MouseMoved += update_selected;
+            Initializer.Window.MouseButtonPressed += updateClicked;
+        }
+
+        public void Destroy()
+        {
+            Initializer.Window.MouseMoved -= update_selected;
+            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         ~Element()
         {
-            window.MouseMoved -= update_Selected;
-            window.MouseButtonPressed -= update_Clicked;
+            Initializer.Window.MouseMoved -= update_selected;
+            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         public override void Update()
         {
-            update_Move();
+            updateMove();
         }
 
-        private void update_Move()
+        private void updateMove()
         {
-            if (moveType != MoveType.NONE)
+            if (_moveType != MoveType.NONE)
             {
-                switch (moveType)
+                switch (_moveType)
                 {
                     case MoveType.UP:
-                        Move_UP();
+                        moveUP();
                         break;
                     case MoveType.DOWN:
-                        Move_DOWN();
+                        moveDOWN();
                         break;
                     case MoveType.LEFT:
-                        Move_LEFT();
+                        moveLEFT();
                         break;
                     case MoveType.RIGHT:
-                        Move_RIGHT();
+                        moveRIGHT();
                         break;
                 }
             }
         }
 
-        private void Move_UP()
+        private void moveUP()
         {
-            set_PositionY(Position.Y - GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionY(_position.Y - GameLoop.dt * ElementMoveSpeed);
 
-            if (Position.Y <= newPosition.Y)
+            if (_position.Y <= _newPosition.Y)
             {
-                moveType = MoveType.NONE;
-                set_PositionY(newPosition.Y);
+                _moveType = MoveType.NONE;
+                set_positionY(_newPosition.Y);
             }
         }
 
-        private void Move_DOWN()
+        private void moveDOWN()
         {
-            set_PositionY(Position.Y + GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionY(_position.Y + GameLoop.dt * ElementMoveSpeed);
 
-            if (Position.Y >= newPosition.Y)
+            if (_position.Y >= _newPosition.Y)
             {
-                moveType = MoveType.NONE;
-                set_PositionY(newPosition.Y);
+                _moveType = MoveType.NONE;
+                set_positionY(_newPosition.Y);
             }
         }
 
-        private void Move_LEFT()
+        private void moveLEFT()
         {
-            set_PositionX(Position.X - GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionX(_position.X - GameLoop.dt * ElementMoveSpeed);
 
-            if (Position.X <= newPosition.X)
+            if (_position.X <= _newPosition.X)
             {
-                moveType = MoveType.NONE;
-                set_PositionX(newPosition.X);
+                _moveType = MoveType.NONE;
+                set_positionX(_newPosition.X);
             }
         }
 
-        private void Move_RIGHT()
+        private void moveRIGHT()
         {
-            set_PositionX(Position.X + GameLoop.dt * ELEMENT_MOVE_SPEED);
+            set_positionX(_position.X + GameLoop.dt * ElementMoveSpeed);
 
-            if (Position.X >= newPosition.X)
+            if (_position.X >= _newPosition.X)
             {
-                moveType = MoveType.NONE;
-                set_PositionX(newPosition.X);
+                _moveType = MoveType.NONE;
+                set_positionX(_newPosition.X);
             }
         }
 
         public void set_newPosition(Vector2f newPosition)
         {
-            this.newPosition = newPosition;
+            this._newPosition = newPosition;
         }
 
         public void set_newPositionX(float x)
         {
-            this.newPosition.X = x;
+            this._newPosition.X = x;
         }
 
         public void set_newPositionY(float y)
         {
-            this.newPosition.Y = y;
+            this._newPosition.Y = y;
         }
 
         public float get_newPositionX()
         {
-            return newPosition.X;
+            return _newPosition.X;
         }
 
         public float get_newPositionY()
         {
-            return newPosition.Y;
+            return _newPosition.Y;
         }
 
-        public void set_MoveType(MoveType moveType)
+        public void set_moveType(MoveType moveType)
         {
-            this.moveType = moveType;
+            this._moveType = moveType;
         }
 
-        public MoveType get_MoveType()
+        public MoveType get_moveType()
         {
-            return moveType;
+            return _moveType;
         }
 
-        public void set_ElementType(ElementType type)
+        public void set_elementType(ElementType type)
         {
-            this.type = type;
+            this._type = type;
         }
 
-        public ElementType get_ElementType()
+        public ElementType get_elementType()
         {
-            return type;
+            return _type;
         }
 
-        public int get_POINTS()
+        public int getPoints()
         {
-            return POINTS;
+            return Points;
         }
 
         public override void Draw()
         {
-            window.Draw(Sprite);
-            if (SELECTED || PRESSED)
+            Initializer.Window.Draw(_sprite);
+            if (_selected || _pressed)
             {
-                window.Draw(SelectSprite);
+                Initializer.Window.Draw(_selectSprite);
             }
         }
     }

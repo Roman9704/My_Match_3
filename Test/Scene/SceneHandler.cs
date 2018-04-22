@@ -3,7 +3,7 @@ using SFML.Graphics;
 using System;
 
 
-namespace Test
+namespace Test.Scene
 {
     enum SceneType
     {

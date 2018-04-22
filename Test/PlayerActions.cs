@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Test.Grid;
 
 namespace Test
 {
@@ -155,8 +156,8 @@ namespace Test
             ChosenCells[0].get_element().set_newPosition(ChosenCells[1].get_position());
             ChosenCells[1].get_element().set_newPosition(ChosenCells[0].get_position());
 
-            ChosenCells[0].get_element().set_MoveType(type0);
-            ChosenCells[1].get_element().set_MoveType(type1);
+            ChosenCells[0].get_element().set_moveType(type0);
+            ChosenCells[1].get_element().set_moveType(type1);
 
             World.swapElements(ChosenCells[0].get_indicesX(), ChosenCells[0].get_indicesY(), ChosenCells[1].get_indicesX(), ChosenCells[1].get_indicesY());
         }

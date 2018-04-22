@@ -3,6 +3,7 @@ using SFML.Window;
 using SFML.Graphics;
 using SFML.System;
 using System;
+using Test.Grid;
 
 namespace Test
 {
@@ -92,7 +93,7 @@ namespace Test
             {
                 for (int x = 0; x < World.AmountOfElements; x++)
                 {
-                    if (Grid.cells[y, x].get_element() == null)
+                    if (GameGrid.Cells[y, x].get_element() == null)
                     {
                         DoEmptyCellsExist = true; 
                         break;
@@ -117,13 +118,13 @@ namespace Test
 
             for (int y =  0; y < World.AmountOfElements; y++) // В конце списка будут нижние элементы
             {
-                if (Grid.cells[y, x].get_element() == null)
+                if (GameGrid.Cells[y, x].get_element() == null)
                 {
-                    _emptyCells.Add(Grid.cells[y, x]);
+                    _emptyCells.Add(GameGrid.Cells[y, x]);
                 }
                 else
                 {
-                    _notEmptyCells.Add(Grid.cells[y, x]);
+                    _notEmptyCells.Add(GameGrid.Cells[y, x]);
                 }
             }
             if (_emptyCells.Count > 0)
@@ -133,7 +134,7 @@ namespace Test
                         if (_emptyCells[_emptyCells.Count - 1].get_indicesY() > _notEmptyCells[i].get_indicesY())
                         {
                             _notEmptyCells[i].get_element().set_newPosition(_emptyCells[_emptyCells.Count - 1].get_position());
-                            _notEmptyCells[i].get_element().set_MoveType(MoveType.DOWN);
+                            _notEmptyCells[i].get_element().set_moveType(MoveType.DOWN);
 
                             _emptyCells[_emptyCells.Count - 1].changeBind_element(_notEmptyCells[i].get_element());
 
@@ -147,9 +148,9 @@ namespace Test
                     }
                 if (_emptyCells.Count > 0)
                 {
-                    if (Grid.cells[0, x].get_element() == null)
+                    if (GameGrid.Cells[0, x].get_element() == null)
                     {
-                        World.spawnElement(Grid.cells[0, x]);
+                        World.spawnElement(GameGrid.Cells[0, x]);
                     }
                     moveCellsToHolesOnVertical(x);
                 }
@@ -177,19 +178,19 @@ namespace Test
         {
             for (int y = World.AmountOfElements - 1; y > 1; y--)
             {
-                if (Grid.cells[y, x].get_elementType() != ElementType.NONE)
+                if (GameGrid.Cells[y, x].get_elementType() != ElementType.NONE)
                 {
-                    if (Grid.cells[y, x].get_elementType() == Grid.cells[y - 1, x].get_elementType() && Grid.cells[y, x].get_elementType() == Grid.cells[y - 2, x].get_elementType())
+                    if (GameGrid.Cells[y, x].get_elementType() == GameGrid.Cells[y - 1, x].get_elementType() && GameGrid.Cells[y, x].get_elementType() == GameGrid.Cells[y - 2, x].get_elementType())
                     {
-                        if (!_verticalChainCells[x].Contains(Grid.cells[y, x]))
+                        if (!_verticalChainCells[x].Contains(GameGrid.Cells[y, x]))
                         {
-                            _verticalChainCells[x].Add(Grid.cells[y, x]);
+                            _verticalChainCells[x].Add(GameGrid.Cells[y, x]);
                         }
-                        if (!_verticalChainCells[x].Contains(Grid.cells[y - 1, x]))
+                        if (!_verticalChainCells[x].Contains(GameGrid.Cells[y - 1, x]))
                         {
-                            _verticalChainCells[x].Add(Grid.cells[y - 1, x]);
+                            _verticalChainCells[x].Add(GameGrid.Cells[y - 1, x]);
                         }
-                        _verticalChainCells[x].Add(Grid.cells[y - 2, x]);
+                        _verticalChainCells[x].Add(GameGrid.Cells[y - 2, x]);
                     }
                 }
             }
@@ -199,19 +200,19 @@ namespace Test
         {
             for (int x = World.AmountOfElements - 1; x > 1; x--)
             {
-                if (Grid.cells[y, x].get_elementType() != ElementType.NONE)
+                if (GameGrid.Cells[y, x].get_elementType() != ElementType.NONE)
                 {
-                    if (Grid.cells[y, x].get_elementType() == Grid.cells[y, x - 1].get_elementType() && Grid.cells[y, x].get_elementType() == Grid.cells[y, x - 2].get_elementType())
+                    if (GameGrid.Cells[y, x].get_elementType() == GameGrid.Cells[y, x - 1].get_elementType() && GameGrid.Cells[y, x].get_elementType() == GameGrid.Cells[y, x - 2].get_elementType())
                     {
-                        if (!_horizontalChainCells[y].Contains(Grid.cells[y, x]))
+                        if (!_horizontalChainCells[y].Contains(GameGrid.Cells[y, x]))
                         {
-                            _horizontalChainCells[y].Add(Grid.cells[y, x]);
+                            _horizontalChainCells[y].Add(GameGrid.Cells[y, x]);
                         }
-                        if (!_horizontalChainCells[y].Contains(Grid.cells[y, x - 1]))
+                        if (!_horizontalChainCells[y].Contains(GameGrid.Cells[y, x - 1]))
                         {
-                            _horizontalChainCells[y].Add(Grid.cells[y, x - 1]);
+                            _horizontalChainCells[y].Add(GameGrid.Cells[y, x - 1]);
                         }
-                        _horizontalChainCells[y].Add(Grid.cells[y, x - 2]);
+                        _horizontalChainCells[y].Add(GameGrid.Cells[y, x - 2]);
                     }
                 }
             }
@@ -225,7 +226,7 @@ namespace Test
                 {
                     if (_verticalChainCells[i][j].get_element() != null)
                     {
-                        Score += _verticalChainCells[i][j].get_element().get_POINTS();
+                        Score += _verticalChainCells[i][j].get_element().getPoints();
                         _verticalChainCells[i][j].unbind_element();
                         World.deleteElement(_verticalChainCells[i][j].get_indicesX(), _verticalChainCells[i][j].get_indicesY());
                     }
@@ -239,7 +240,7 @@ namespace Test
                 {
                     if (_horizontalChainCells[i][j].get_element() != null)
                     {
-                        Score += _horizontalChainCells[i][j].get_element().get_POINTS();
+                        Score += _horizontalChainCells[i][j].get_element().getPoints();
                         _horizontalChainCells[i][j].unbind_element();
                         World.deleteElement(_horizontalChainCells[i][j].get_indicesX(), _horizontalChainCells[i][j].get_indicesY());
                     }
@@ -256,9 +257,9 @@ namespace Test
             {
                 for (int x = 0; x <World.AmountOfElements; x++)
                 {
-                    if (Grid.cells[y, x].get_element() == null) { continue; }
+                    if (GameGrid.Cells[y, x].get_element() == null) { continue; }
 
-                    if (Grid.cells[y, x].get_element().get_MoveType() != MoveType.NONE)
+                    if (GameGrid.Cells[y, x].get_element().get_moveType() != MoveType.NONE)
                     {
                         AreElementsMove = true;
                         break;

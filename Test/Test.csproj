@@ -64,16 +64,22 @@
     <Compile Include="Button\ButtonOk.cs" />
     <Compile Include="Grid\Cell.cs" />
     <Compile Include="Content.cs" />
-    <Compile Include="Button\Element.cs" />
-    <Compile Include="GUI\GameInterface.cs" />
-    <Compile Include="GUI\GUIElement\AbstractGUIElement.cs" />
+    <Compile Include="Element.cs" />
     <Compile Include="GUI\AbstractGUI.cs" />
-    <Compile Include="GUI\GUIElement\Inscription.cs" />
+    <Compile Include="GUI\GameInterface.cs" />
+    <Compile Include="GUI\GameMenuInterface.cs" />
+    <Compile Include="GUI\GameOverInterface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\GUIElement\AbstractGUIElement.cs" />
+    <Compile Include="GUI\GUIElement\Inscription.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlayerActions.cs" />
     <Compile Include="Scene\SceneGameOver.cs" />
     <Compile Include="Scene\SceneHandler.cs" />
     <Compile Include="GameLoop.cs" />
-    <Compile Include="Grid\Grid.cs" />
+    <Compile Include="Grid\GameGrid.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="Button\MenuButton.cs" />

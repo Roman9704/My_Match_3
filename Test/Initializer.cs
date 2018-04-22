@@ -1,13 +1,14 @@
 ﻿using System;
 
 using SFML.Graphics;
+using Test.Scene;
 
 namespace Test
 {
     static class Initializer
     {
-        public const uint WindowWidth = ((uint)Element.elementSize + Grid.partitionWidth) * World.AmountOfElements + Grid.coordinateShift;
-        public const uint WindowHeight = WindowWidth + GameInterface.heightTimerAndScore;
+        public const uint WindowWidth = ((uint)Element.ElementSize + Test.Grid.GameGrid.PartitionWidth) * World.AmountOfElements + Test.Grid.GameGrid.CoordinateShift;
+        public const uint WindowHeight = WindowWidth + GUI.GameInterface.HeightTimerAndScore;
 
         public static RenderWindow Window = null;
         public static SceneHandler SceneHandler = null;
@@ -25,7 +26,7 @@ namespace Test
         {
             Window = new RenderWindow(new SFML.Window.VideoMode(WindowWidth, WindowHeight), "Test task for Summer practice, by Anoshin Roman");
             Window.SetVerticalSyncEnabled(true);
-            //window.SetFramerateLimit(60);
+            Window.SetFramerateLimit(60);
 
             Window.Closed += WindowClosed;
         }

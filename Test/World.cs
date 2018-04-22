@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Test.Grid;
 
 namespace Test
 {
@@ -63,7 +64,7 @@ namespace Test
         public void generateElements()
         {
             Elements = new Element[AmountOfElements, AmountOfElements];
-            _offset = new Vector2f(0, Element.elementSize + Grid.coordinateShift);
+            _offset = new Vector2f(0, Element.ElementSize + GameGrid.CoordinateShift);
             _random = new Random();
 
             for (int y = 0 ;y < AmountOfElements; y++)
@@ -129,7 +130,7 @@ namespace Test
 
         public void setElement(ElementType type, int x, int y)
         {
-            Elements[y, x] = new Element(type, Grid.get_position(x, y));
+            Elements[y, x] = new Element(type, GameGrid.get_position(x, y));
         }
 
         public static void deleteElement(int x, int y)

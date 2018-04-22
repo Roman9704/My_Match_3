@@ -1,15 +1,15 @@
 ﻿using System;
 
 using SFML.Graphics;
+using Test.Grid;
 
-namespace Test
+namespace Test.Scene
 {
     class SceneGame : AbstractScene
     {
         World _world = null;
-        Grid _grid = null;
+        GameGrid _grid = null;
         GameLogic _gameLogic = null;
-        GameInterface _gameInterface = null;
 
         public SceneGame()
         {
@@ -21,17 +21,17 @@ namespace Test
 
             _world = new World();
 
-            _grid = new Grid();
+            _grid = new GameGrid();
 
             _gameLogic = new GameLogic();
             _gameLogic.Generate();
 
-            _gameInterface = new GameInterface(this);
-            _gameInterface.Generate();
+            _gui = new GUI.GameInterface(this);
+            _gui.Generate();
 
-            _grid.generate_cells();    // Создаем сетку из пустых клеток
+            _grid.generateCells();    // Создаем сетку из пустых клеток
             _world.generateElements();  // Создаем элементы по созданной сетке
-            _grid.bind_Elements_to_Cells();   // Привязываем элементы к сетке
+            _grid.bindElementsToCells();   // Привязываем элементы к сетке
         }
 
         public override void Destroy()
@@ -44,22 +44,22 @@ namespace Test
             _gameLogic.Destroy();
             _gameLogic = null;
 
-            _gameInterface.Destroy();
-            _gameInterface = null;
+            _gui.Destroy();
+            _gui = null;
         }
 
         public override void Update()
         {
             _gameLogic.Update();
             _world.Update();
-            _gameInterface.Update();
+            _gui.Update();
         }
 
         public override void Draw()
         {
             _background.Draw();
             _world.Draw();
-            _gameInterface.Draw();
+            _gui.Draw();
         }
 
         public override void Transition()

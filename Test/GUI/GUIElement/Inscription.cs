@@ -1,32 +1,33 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 
-namespace Test
+namespace Test.GUI.GUIElement
 {
     class Inscription : AbstractGUIElement
     {
         Text _text = null;
 
-        Inscription(string String, Font font, uint size)
+        public Inscription(string String, Font font, uint size)
         {
             _text = new Text(String, font, size);
         }
-        Inscription(string String, Font font)
+        public Inscription(string String, Font font)
         {
             _text = new Text(String, font);
         }
-        Inscription()
+        public Inscription()
         {
             _text = new Text();
         }
-        Inscription(Inscription copy)
+        public Inscription(Inscription copy)
         {
             _text = new Text(copy.get_string(), copy.get_font(), copy.get_size());
             _text.Color = copy.get_color();
             _text.Style = copy.get_style();
         }
 
-        public void set_string(string text){
+        public void set_string(string text)
+        {
             this._text.DisplayedString = text;
         }
         public string get_string()
@@ -96,7 +97,7 @@ namespace Test
         }
         public override void Update()
         {
-            
+
         }
     }
 }

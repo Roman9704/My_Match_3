@@ -3,7 +3,7 @@ using SFML.System;
 using SFML.Window;
 using System;
 
-namespace Test
+namespace Test.Button
 {
     abstract class AbstractRectangularButton
     {

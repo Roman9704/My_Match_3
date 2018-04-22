@@ -1,6 +1,6 @@
 ﻿using SFML.System;
 
-namespace Test
+namespace Test.Grid
 {
     class Cell
     {
@@ -25,7 +25,7 @@ namespace Test
             bind_element(newElement);
         }
 
-        public void add_Cell_to_ChoosenCells()
+        public void addCellToChosenCells()
         {
             if (GameLogic.AreElementsMove == false && PlayerActions.ChosenCells.Count < 2)
             {
@@ -37,7 +37,7 @@ namespace Test
             }
         }
 
-        public void remove_Cell_to_ChoosenCells()
+        public void removeCellInChosenCells()
         {
             PlayerActions.ChosenCells.Remove(this);
         }
@@ -46,16 +46,16 @@ namespace Test
         {
             set_element(element);
 
-            element.Clicked += add_Cell_to_ChoosenCells;
-            element.UnClicked += remove_Cell_to_ChoosenCells;
+            element.Clicked += addCellToChosenCells;
+            element.UnClicked += removeCellInChosenCells;
         }
 
         public void unbind_element()
         {
             if (_element != null)
             {
-                _element.Clicked -= add_Cell_to_ChoosenCells;
-                _element.UnClicked -= remove_Cell_to_ChoosenCells;
+                _element.Clicked -= addCellToChosenCells;
+                _element.UnClicked -= removeCellInChosenCells;
 
                 set_element(null);
             }
@@ -125,7 +125,7 @@ namespace Test
             {
                 return ElementType.NONE;
             }
-            return _element.get_ElementType();
+            return _element.get_elementType();
         }
     }
 }

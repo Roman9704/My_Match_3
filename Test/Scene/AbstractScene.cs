@@ -1,10 +1,11 @@
 ﻿using SFML.Graphics;
 
-namespace Test
+namespace Test.Scene
 {
     abstract class AbstractScene
     {
         protected Background _background = null;
+        protected Test.GUI.AbstractGUI _gui = null;
 
         public abstract void Generate();
         public abstract void Destroy();
