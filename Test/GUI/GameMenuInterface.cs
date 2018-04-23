@@ -9,7 +9,7 @@ namespace Test.GUI
 {
     class GameMenuInterface : AbstractGUI
     {
-        MenuButton menuButton = null;
+        RectangularButton _menuButton = null;
 
         public GameMenuInterface(Test.Scene.AbstractScene scene)
         {
@@ -18,24 +18,24 @@ namespace Test.GUI
 
         public override void Generate()
         {
-            menuButton = new MenuButton();
-            menuButton.Clicked += _scene.Transition;
+            _menuButton = new RectangularButton(120, 60, Content.ButtonSprite0, Content.ButtonSprite1, Initializer.WindowWidth / 2 - 120 / 2, Initializer.WindowHeight / 2 - 60 / 2);
+            _menuButton.Clicked += _scene.Transition;
         }
 
         public override void Destroy()
         {
-            menuButton.Clicked -= _scene.Transition;
-            menuButton = null;
+            _menuButton.Clicked -= _scene.Transition;
+            _menuButton.Destroy();
+            _menuButton = null;
         }
 
         public override void Update()
         {
-            menuButton.Update();
         }
 
         public override void Draw()
         {
-            menuButton.Draw();
+            _menuButton.Draw();
         }
     }
 }

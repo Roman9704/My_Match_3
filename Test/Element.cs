@@ -24,7 +24,7 @@ namespace Test
         RIGHT
     }
 
-    class Element : AbstractRectangularButton
+    class Element : SquareButton
     {
         public const int ElementSize = 60;
         public const float ElementMoveSpeed = 200f;
@@ -35,46 +35,18 @@ namespace Test
         Vector2f _newPosition;
 
         public Element(ElementType type, Vector2f Position)
+            : base(ElementSize, Content.ElementSprite[(int)type], Content.SelectSprite, Position)
         {
-            set_width(ElementSize);
-            set_height(ElementSize);
             set_elementType(type);
-
-
-            set_sprite(Content.ElementSprite[(int)type]);
-            set_selectSprite(Content.SelectSprite);
-            set_position(Position);
-
-            Initializer.Window.MouseMoved += update_selected;
-            Initializer.Window.MouseButtonPressed += updateClicked;
         }
 
         public Element(ElementType type, Vector2f Position, Vector2f newPosition, MoveType moveType)
+            : base(ElementSize, Content.ElementSprite[(int)type], Content.SelectSprite, Position)
         {
-            set_width(ElementSize);
-            set_height(ElementSize);
             set_elementType(type);
 
-            set_sprite(Content.ElementSprite[(int)type]);
-            set_selectSprite(Content.SelectSprite);
-            set_position(Position);
             set_newPosition(newPosition);
             set_moveType(moveType);
-
-            Initializer.Window.MouseMoved += update_selected;
-            Initializer.Window.MouseButtonPressed += updateClicked;
-        }
-
-        public void Destroy()
-        {
-            Initializer.Window.MouseMoved -= update_selected;
-            Initializer.Window.MouseButtonPressed -= updateClicked;
-        }
-
-        ~Element()
-        {
-            Initializer.Window.MouseMoved -= update_selected;
-            Initializer.Window.MouseButtonPressed -= updateClicked;
         }
 
         public override void Update()

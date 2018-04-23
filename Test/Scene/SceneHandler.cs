@@ -1,6 +1,7 @@
 ﻿using SFML.System;
 using SFML.Graphics;
 using System;
+using System.Collections.Generic;
 
 
 namespace Test.Scene
@@ -14,59 +15,54 @@ namespace Test.Scene
 
     class SceneHandler
     {
-        AbstractScene _scene = null;
-        SceneType _currentScene;
+        int _currentSceneIndex;
+        List<AbstractScene> _listOfScenes = null;
 
         public SceneHandler()
         {
-            set_currentScene(SceneType.GameMenu);
-            _scene = new SceneGameMenu();
-            _scene.Generate();
+            _listOfScenes = new List<AbstractScene>();
+            _listOfScenes.Add(new SceneGameMenu());
+            _listOfScenes.Add(new SceneGame());
+            _listOfScenes.Add(new SceneGameOver());
+
+            set_currentSceneIndex(0);
+
+            _listOfScenes[_currentSceneIndex].Generate();
         }
 
         public void Update()
         {
-            _scene.Update();
+            _listOfScenes[_currentSceneIndex].Update();
         }
 
         public void Draw()
         {
-            _scene.Draw();
+            _listOfScenes[_currentSceneIndex].Draw();
         }
-
 
         public void Transition()
         {
-            _scene.Destroy();
+            _listOfScenes[_currentSceneIndex].Destroy();
 
-            if (_currentScene == SceneType.GameOver)
+            if (_currentSceneIndex == _listOfScenes.Count - 1)
             {
-                _currentScene = SceneType.GameMenu;
-                _scene = new SceneGameMenu();
+                _currentSceneIndex = 0;
             }
             else
             {
-                _currentScene++;
-                if (_currentScene == SceneType.Game)
-                {
-                    _scene = new SceneGame();
-                }
-                else
-                {
-                    _scene = new SceneGameOver();
-                }
+                _currentSceneIndex++;
             }
 
-            _scene.Generate();
+            _listOfScenes[_currentSceneIndex].Generate();
         }
 
-        private void set_currentScene(SceneType type)
+        private void set_currentSceneIndex(int i)
         {
-            _currentScene = type;
+            _currentSceneIndex = i;
         }
-        public SceneType get_currentScene()
+        public int get_currentSceneIndex()
         {
-            return _currentScene;
+            return _currentSceneIndex;
         }
     }
 }
