@@ -12,8 +12,8 @@ namespace Test.GUI
     class GameOverInterface : AbstractGUI
     {
         const int _sizeText = World.AmountOfElements * 6;
-        List<Inscription> _listOfInscriptions = null;
         SquareButton _buttonOk = null;
+        Inscription _inscriptionScore = null;
 
         public GameOverInterface(Test.Scene.AbstractScene scene)
         {
@@ -22,16 +22,17 @@ namespace Test.GUI
 
         public override void Generate()
         {
-            _listOfInscriptions = new List<Inscription>();
+            _listOfGUIElements = new List<AbstractGUIElement>();
 
-            _listOfInscriptions.Add(new Inscription("Game Over", Content.Font, _sizeText));
-            _listOfInscriptions[0].set_position(new Vector2f(Initializer.WindowWidth / 2 - _sizeText * 2.8f, Initializer.WindowHeight / 2 - _sizeText * 2));
+            _listOfGUIElements.Add(new Inscription("Game Over", Content.Font, _sizeText));
+            _listOfGUIElements[0].set_position(new Vector2f(Initializer.WindowWidth / 2 - _sizeText * 2.8f, Initializer.WindowHeight / 2 - _sizeText * 2));
 
-            _listOfInscriptions.Add(new Inscription("Your score: " + GameLogic.Score.ToString(), Content.Font, _sizeText));
-            _listOfInscriptions[1].set_position(new Vector2f(_listOfInscriptions[0].get_positionX() - _sizeText * 1.5f, _listOfInscriptions[0].get_positionY() + _sizeText * 1.5f));
-            _listOfInscriptions[1].set_color(new Color(254, 216, 1));
+            _listOfGUIElements.Add(new Inscription("Your score: " + GameLogic.Score.ToString(), Content.Font, _sizeText));
+            _listOfGUIElements[1].set_position(new Vector2f(_listOfGUIElements[0].get_positionX() - _sizeText * 1.5f, _listOfGUIElements[0].get_positionY() + _sizeText * 1.5f));
+            _inscriptionScore = _listOfGUIElements[1] as Inscription;
+            _inscriptionScore.set_color(new Color(254, 216, 1));
 
-            _buttonOk = new SquareButton(60, Content.ButtonOkSprite, Content.ButtonOkSelectSprite, Initializer.WindowWidth / 2 - 60 / 2, _listOfInscriptions[1].get_positionY() + 60 / 2 + _sizeText * 1.5f);
+            _buttonOk = new SquareButton(60, Content.ButtonOkSprite, Content.ButtonOkSelectSprite, Initializer.WindowWidth / 2 - 60 / 2, _listOfGUIElements[1].get_positionY() + 60 / 2 + _sizeText * 1.5f);
             _buttonOk.Clicked += _scene.Transition;
         }
 
@@ -41,8 +42,10 @@ namespace Test.GUI
             _buttonOk.Destroy();
             _buttonOk = null;
 
-            _listOfInscriptions.Clear();
-            _listOfInscriptions = null;
+            _listOfGUIElements.Clear();
+            _listOfGUIElements = null;
+
+            _scene = null;
         }
 
         public override void Update()
@@ -53,9 +56,9 @@ namespace Test.GUI
         public override void Draw()
         {
             _buttonOk.Draw();
-            for (int i = 0; i < _listOfInscriptions.Count; i++)
+            for (int i = 0; i < _listOfGUIElements.Count; i++)
             {
-                _listOfInscriptions[i].Draw();
+                _listOfGUIElements[i].Draw();
             }
         }
     }
