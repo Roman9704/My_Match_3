@@ -1,4 +1,4 @@
-﻿namespace Test
+﻿namespace Pulse
 {
     static class Program
     {

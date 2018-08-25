@@ -1,0 +1,12 @@
+G:\Dev\My_Match_3\Test\bin\Debug\PulseEngine.exe.config
+G:\Dev\My_Match_3\Test\bin\Debug\PulseEngine.exe
+G:\Dev\My_Match_3\Test\bin\Debug\PulseEngine.pdb
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-audio-2.dll
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-graphics-2.dll
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-system-2.dll
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-window-2.dll
+G:\Dev\My_Match_3\Test\obj\Debug\Pulse.csprojAssemblyReference.cache
+G:\Dev\My_Match_3\Test\obj\Debug\Pulse.csproj.CoreCompileInputs.cache
+G:\Dev\My_Match_3\Test\obj\Debug\Pulse.csproj.CopyComplete
+G:\Dev\My_Match_3\Test\obj\Debug\PulseEngine.exe
+G:\Dev\My_Match_3\Test\obj\Debug\PulseEngine.pdb

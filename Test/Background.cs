@@ -1,65 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SFML.Graphics;
 
-using SFML.Graphics;
-
-namespace Test
+namespace Pulse
 {
-    enum BackgroundType
+    public enum BackgroundType
     {
         DarkPurple,
         Turquoise
     }
 
-    class Background
+    public class Background
     {
-        BackgroundType _type;
-
-        Color _clearColor;
+        private BackgroundType type;
+        public BackgroundType Type
+        {
+            get
+            {
+                return type;
+            }
+            set
+            {
+                type = value;
+                Color = Content.ListOfColors[(int)value];
+            }
+        }
+        public Color Color { get; private set; }
 
         public Background(BackgroundType type)
         {
-            set_BackgroundType(type);
-        }
-
-        public void set_BackgroundType(BackgroundType type)
-        {
-            this._type = type;
-
-            _clearColor = Content.ListOfColors[(int)type];
-        }
-        public BackgroundType get_BackgroundType()
-        {
-            return _type;
-        }
-        public void change_BackgroundType()
-        {
-            if (_type == BackgroundType.DarkPurple)
-            {
-                set_BackgroundType(BackgroundType.Turquoise);
-                _clearColor = Content.ListOfColors[(int)BackgroundType.Turquoise];
-            }
-            else
-            {
-                set_BackgroundType(BackgroundType.DarkPurple);
-                _clearColor = Content.ListOfColors[(int)BackgroundType.DarkPurple];
-            }
-        }
-        public void set_clearColor(Color ClearColor)
-        {
-            this._clearColor = ClearColor;
-        }
-        public Color get_clearColor()
-        {
-            return _clearColor;
+            Type = type;
         }
 
         public void Draw()
         {
-            Initializer.Window.Clear(_clearColor);
+            Initializer.Window.Clear(Color);
         }
     }
 }

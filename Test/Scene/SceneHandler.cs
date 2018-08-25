@@ -1,68 +1,55 @@
-﻿using SFML.System;
-using SFML.Graphics;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-
-namespace Test.Scene
+namespace Pulse.Scene
 {
-    enum SceneType
+    public enum SceneType
     {
         GameMenu,
         Game,
         GameOver
     }
 
-    class SceneHandler
+    public class SceneHandler
     {
-        int _currentSceneIndex;
-        List<AbstractScene> _listOfScenes = null;
+        public int CurrentSceneIndex { get; private set; }
+        private List<AbstractScene> listOfScenes = null;
 
         public SceneHandler()
         {
-            _listOfScenes = new List<AbstractScene>();
-            _listOfScenes.Add(new SceneGameMenu());
-            _listOfScenes.Add(new SceneGame());
-            _listOfScenes.Add(new SceneGameOver());
+            listOfScenes = new List<AbstractScene>();
+            listOfScenes.Add(new SceneGameMenu());
+            listOfScenes.Add(new SceneGame());
+            listOfScenes.Add(new SceneGameOver());
 
-            set_currentSceneIndex(0);
+            CurrentSceneIndex = 0;
 
-            _listOfScenes[_currentSceneIndex].Generate();
+            listOfScenes[CurrentSceneIndex].Generate();
         }
 
         public void Update()
         {
-            _listOfScenes[_currentSceneIndex].Update();
+            listOfScenes[CurrentSceneIndex].Update();
         }
 
         public void Draw()
         {
-            _listOfScenes[_currentSceneIndex].Draw();
+            listOfScenes[CurrentSceneIndex].Draw();
         }
 
         public void Transition()
         {
-            _listOfScenes[_currentSceneIndex].Destroy();
+            listOfScenes[CurrentSceneIndex].Destroy();
 
-            if (_currentSceneIndex == _listOfScenes.Count - 1)
+            if (CurrentSceneIndex == listOfScenes.Count - 1)
             {
-                _currentSceneIndex = 0;
+                CurrentSceneIndex = 0;
             }
             else
             {
-                _currentSceneIndex++;
+                CurrentSceneIndex++;
             }
 
-            _listOfScenes[_currentSceneIndex].Generate();
-        }
-
-        private void set_currentSceneIndex(int i)
-        {
-            _currentSceneIndex = i;
-        }
-        public int get_currentSceneIndex()
-        {
-            return _currentSceneIndex;
+            listOfScenes[CurrentSceneIndex].Generate();
         }
     }
 }

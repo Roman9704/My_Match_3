@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using Test.Grid;
+using Pulse.Grid;
+using Pulse.World;
 
-namespace Test
+namespace Pulse
 {
-    class PlayerActions
+    public class PlayerActions
     {
-        bool _actionOccurred = false;
+        private bool actionOccurred = false;
 
         public static List<Cell> ChosenCells = null;
 
@@ -16,7 +17,7 @@ namespace Test
 
         public void Update()
         {
-            updateChosenCells();
+            UpdateChosenCells();
         }
 
         public void Generate()
@@ -31,61 +32,68 @@ namespace Test
         }
 
         // Обновление списка выбранных элементов
-        private void updateChosenCells() 
+        private void UpdateChosenCells() 
         {
-            if (GameLogic.AreElementsMove == false && GameLogic.DoEmptyCellsExist == false && _actionOccurred == false)
+            if (GameLogic.AreElementsMove == false && GameLogic.DoEmptyCellsExist == false && actionOccurred == false)
             {
                 if (ChosenCells.Count > 1)
                 {
-                    if (ChosenCells[0].get_indicesX() == ChosenCells[1].get_indicesX()) // Элементы на одной вертикали
+                    // Элементы на одной вертикали
+                    if (ChosenCells[0].Indices.X == ChosenCells[1].Indices.X) 
                     {
-                        if (ChosenCells[0].get_indicesY() - ChosenCells[1].get_indicesY() == 1) // нулевой ниже, чем первый
-                        { // меняем элементы местами по вертикали и чекаем после их перемещения
-                            swapElementsInChosenCells(MoveType.UP, MoveType.DOWN);
-                            rebindElementsInChosenCells();
-                            _actionOccurred = true;
+                        // нулевой ниже, чем первый
+                        if (ChosenCells[0].Indices.Y - ChosenCells[1].Indices.Y == 1) 
+                        { 
+                            // меняем элементы местами по вертикали и чекаем после их перемещения
+                            swapElementsInChosenCells(MoveType.Up, MoveType.Down);
+                            RebindElementsInChosenCells();
+                            actionOccurred = true;
                         }
                         else
                         {
-                            if (ChosenCells[0].get_indicesY() - ChosenCells[1].get_indicesY() == -1) // нулевой выше, чем первый
+                            // нулевой выше, чем первый
+                            if (ChosenCells[0].Indices.Y - ChosenCells[1].Indices.Y == -1) 
                             { // меняем элементы местами по вертикали и чекаем после их перемещения
-                                swapElementsInChosenCells(MoveType.DOWN, MoveType.UP);
-                                rebindElementsInChosenCells();
-                                _actionOccurred = true;
+                                swapElementsInChosenCells(MoveType.Down, MoveType.Up);
+                                RebindElementsInChosenCells();
+                                actionOccurred = true;
                             }
                             else
                             {
-                                unchosedAndRemoveChosenCell(1);
+                                UnchosedAndRemoveChosenCell(1);
                             }
                         }
                     }
                     else
                     {
-                        if (ChosenCells[0].get_indicesY() == ChosenCells[1].get_indicesY()) // Элементы на одной горизонтали
+                        // Элементы на одной горизонтали
+                        if (ChosenCells[0].Indices.Y == ChosenCells[1].Indices.Y) 
                         {
-                            if (ChosenCells[0].get_indicesX() - ChosenCells[1].get_indicesX() == 1) // нулевой правее, чем первый
+                            // нулевой правее, чем первый
+                            if (ChosenCells[0].Indices.X - ChosenCells[1].Indices.X == 1) 
                             { // меняем элементы местами по вертикали и чекаем после их перемещения
-                                swapElementsInChosenCells(MoveType.LEFT, MoveType.RIGHT);
-                                rebindElementsInChosenCells();
-                                _actionOccurred = true;
+                                swapElementsInChosenCells(MoveType.Left, MoveType.Right);
+                                RebindElementsInChosenCells();
+                                actionOccurred = true;
                             }
                             else
                             {
-                                if (ChosenCells[0].get_indicesX() - ChosenCells[1].get_indicesX() == -1) // нулевой левее, чем первый
+                                // нулевой левее, чем первый
+                                if (ChosenCells[0].Indices.X - ChosenCells[1].Indices.X == -1) 
                                 { // меняем элементы местами по вертикали и чекаем после их перемещения
-                                    swapElementsInChosenCells(MoveType.RIGHT, MoveType.LEFT);
-                                    rebindElementsInChosenCells();
-                                    _actionOccurred = true;
+                                    swapElementsInChosenCells(MoveType.Right, MoveType.Left);
+                                    RebindElementsInChosenCells();
+                                    actionOccurred = true;
                                 }
                                 else
                                 {
-                                    unchosedAndRemoveChosenCell(1);
+                                    UnchosedAndRemoveChosenCell(1);
                                 }
                             }
                         }
                         else
                         {
-                            unchosedAndRemoveChosenCell(1);
+                            UnchosedAndRemoveChosenCell(1);
                         }
                     }
                 }
@@ -93,82 +101,85 @@ namespace Test
             }
             else
             {
-                if (_actionOccurred && GameLogic.AreElementsMove == false)
+                if (actionOccurred && GameLogic.AreElementsMove == false)
                 {
                     if (GameLogic.DoEmptyCellsExist)
                     {
-                        unchosedAndRemoveChosenCell(1);
-                        unchosedAndRemoveChosenCell(0);
-                        _actionOccurred = false;
+                        UnchosedAndRemoveChosenCell(1);
+                        UnchosedAndRemoveChosenCell(0);
+                        actionOccurred = false;
                     }
                     else
                     {
-                        unswapCellsAndElements();
-                        unchosedAndRemoveChosenCell(1);
-                        unchosedAndRemoveChosenCell(0);
-                        _actionOccurred = false;
+                        UnswapCellsAndElements();
+                        UnchosedAndRemoveChosenCell(1);
+                        UnchosedAndRemoveChosenCell(0);
+                        actionOccurred = false;
                     }
                 }
             }
         }
 
-        private void unswapCellsAndElements()
+        private void UnswapCellsAndElements()
         {
-            if (ChosenCells[0].get_indicesX() == ChosenCells[1].get_indicesX()) // Элементы на одной вертикали
+            // Элементы на одной вертикали
+            if (ChosenCells[0].Indices.X == ChosenCells[1].Indices.X) 
             {
-                if (ChosenCells[0].get_indicesY() > ChosenCells[1].get_indicesY()) // нулевой ниже, чем первый
+                // нулевой ниже, чем первый
+                if (ChosenCells[0].Indices.Y > ChosenCells[1].Indices.Y) 
                 {
-                    swapElementsInChosenCells(MoveType.UP, MoveType.DOWN);
-                    rebindElementsInChosenCells();
+                    swapElementsInChosenCells(MoveType.Up, MoveType.Down);
+                    RebindElementsInChosenCells();
                 }
                 else // нулевой выше, чем первый
                 {
-                    swapElementsInChosenCells(MoveType.DOWN, MoveType.UP);
-                    rebindElementsInChosenCells();
+                    swapElementsInChosenCells(MoveType.Down, MoveType.Up);
+                    RebindElementsInChosenCells();
                 }
             }
             else // Элементы на одной горизонтали
             {
-                if (ChosenCells[0].get_indicesX() > ChosenCells[1].get_indicesX()) // нулевой правее, чем первый
+                // нулевой правее, чем первый
+                if (ChosenCells[0].Indices.X > ChosenCells[1].Indices.X) 
                 {
-                    swapElementsInChosenCells(MoveType.LEFT, MoveType.RIGHT);
-                    rebindElementsInChosenCells();
+                    swapElementsInChosenCells(MoveType.Left, MoveType.Right);
+                    RebindElementsInChosenCells();
                 }
                 else // нулевой левее, чем первый
                 {
-                    swapElementsInChosenCells(MoveType.RIGHT, MoveType.LEFT);
-                    rebindElementsInChosenCells();
+                    swapElementsInChosenCells(MoveType.Right, MoveType.Left);
+                    RebindElementsInChosenCells();
                 }
             }
         }
 
-        private void unchosedAndRemoveChosenCell(int i)
+        private void UnchosedAndRemoveChosenCell(int i)
         {
-            if (ChosenCells[i].get_element() != null)
+            if (ChosenCells[i].Element != null)
             {
-                ChosenCells[i].get_element().set_pressed(false);
+                ChosenCells[i].Element.Pressed = false;
             }
             ChosenCells.RemoveAt(i);
         }
 
         private void swapElementsInChosenCells(MoveType type0, MoveType type1)
         {
-            ChosenCells[0].get_element().set_newPosition(ChosenCells[1].get_position());
-            ChosenCells[1].get_element().set_newPosition(ChosenCells[0].get_position());
+            ChosenCells[0].Element.NewPosition = ChosenCells[1].Position;
+            ChosenCells[1].Element.NewPosition = ChosenCells[0].Position;
 
-            ChosenCells[0].get_element().set_moveType(type0);
-            ChosenCells[1].get_element().set_moveType(type1);
+            ChosenCells[0].Element.MoveType = type0;
+            ChosenCells[1].Element.MoveType = type1;
 
-            World.swapElements(ChosenCells[0].get_indicesX(), ChosenCells[0].get_indicesY(), ChosenCells[1].get_indicesX(), ChosenCells[1].get_indicesY());
+            GameWorld.SwapElements(ChosenCells[0].Indices.X, ChosenCells[0].Indices.Y, ChosenCells[1].Indices.X, ChosenCells[1].Indices.Y);
         }
 
-        private void rebindElementsInChosenCells()
+        private void RebindElementsInChosenCells()
         {
             Element element;
 
-            element = ChosenCells[0].get_element();
-            ChosenCells[0].changeBind_element(ChosenCells[1].get_element());
-            ChosenCells[1].changeBind_element(element);
+            element = ChosenCells[0].Element;
+            ChosenCells[0].ChangeBindElement(ChosenCells[1].Element);
+            ChosenCells[1].ChangeBindElement(element);
         }
     }
 }

@@ -1,45 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using Test.GUI.GUIElement;
+﻿using System.Collections.Generic;
+using Pulse.GUI.GUIObject;
 
-namespace Test.GUI
+namespace Pulse.GUI
 {
-    abstract class AbstractGUI
+    public abstract class AbstractGUI
     {
-        protected List<AbstractGUIElement> _listOfGUIElements = null;
-        protected Test.Scene.AbstractScene _scene = null;
+        protected List<AbstractGUIObject> GUIObjectsList = null;
+        public Scene.AbstractScene Scene { get; set; }
         public abstract void Generate();
+
         public virtual void Destroy()
         {
-            if (_listOfGUIElements != null)
+            if (GUIObjectsList != null)
             {
-                _listOfGUIElements.Clear();
-                _listOfGUIElements = null;
+                GUIObjectsList.Clear();
+                GUIObjectsList = null;
             }
 
-            _scene = null;
+            Scene = null;
         }
+
         public virtual void Update()
         {
-            if (_listOfGUIElements != null)
+            if (GUIObjectsList != null)
             {
-                for (int i = 0; i < _listOfGUIElements.Count; i++)
+                for (int i = 0; i < GUIObjectsList.Count; i++)
                 {
-                    _listOfGUIElements[i].Update();
+                    GUIObjectsList[i].Update();
                 }
             }
         }
+
         public virtual void Draw()
         {
-            for (int i = 0; i < _listOfGUIElements.Count; i++)
+            for (int i = 0; i < GUIObjectsList.Count; i++)
             {
-                _listOfGUIElements[i].Draw();
+                GUIObjectsList[i].Draw();
             }
-        }
-
-        protected void set_Scene(Test.Scene.AbstractScene scene)
-        {
-            this._scene = scene;
         }
     }
 }

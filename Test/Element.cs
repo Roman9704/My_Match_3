@@ -1,181 +1,127 @@
 ﻿using SFML.System;
-using SFML.Graphics;
-using SFML.Window;
-using Test.Button;
+using Pulse.GUI.GUIObject.Button;
 
-namespace Test
+namespace Pulse
 {
-    enum ElementType
+    public enum ElementType
     {
-        NONE,
-        BLUE,
-        GREEN,
-        ORANGE,
-        PINK,
-        YELLOW
+        None,
+        Blue,
+        Green,
+        Orange,
+        Pink,
+        Yellow
     }
 
-    enum MoveType
+    public enum MoveType
     {
-        NONE,
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
+        None,
+        Up,
+        Down,
+        Left,
+        Right
     }
 
-    class Element : SquareButton
+    public class Element : RectangularButton
     {
         public const int ElementSize = 60;
-        public const float ElementMoveSpeed = 200f;
-        const int Points = 1;
+        public const float MoveSpeed = 200f;
+        public int Points = 1;
 
-        ElementType _type = ElementType.NONE;
-        MoveType _moveType = MoveType.NONE;
-        Vector2f _newPosition;
+        public ElementType Type = ElementType.None;
+        public MoveType MoveType = MoveType.None;
+        public Vector2f NewPosition;
 
         public Element(ElementType type, Vector2f Position)
-            : base(ElementSize, Content.ElementSprite[(int)type], Content.SelectSprite, Position)
+            : base(new Vector2f(ElementSize, ElementSize), Content.ElementSprite[(int)type], Content.SelectSprite, Position)
         {
-            set_elementType(type);
+            Type = type;
         }
 
         public Element(ElementType type, Vector2f Position, Vector2f newPosition, MoveType moveType)
-            : base(ElementSize, Content.ElementSprite[(int)type], Content.SelectSprite, Position)
+            : this(type, Position)
         {
-            set_elementType(type);
-
-            set_newPosition(newPosition);
-            set_moveType(moveType);
+            NewPosition = newPosition;
+            MoveType = moveType;
         }
 
         public override void Update()
         {
-            updateMove();
+            UpdateMove();
         }
 
-        private void updateMove()
+        private void UpdateMove()
         {
-            if (_moveType != MoveType.NONE)
+            if (MoveType != MoveType.None)
             {
-                switch (_moveType)
+                switch (MoveType)
                 {
-                    case MoveType.UP:
-                        moveUP();
+                    case MoveType.Up:
+                        MoveUp();
                         break;
-                    case MoveType.DOWN:
-                        moveDOWN();
+                    case MoveType.Down:
+                        MoveDown();
                         break;
-                    case MoveType.LEFT:
-                        moveLEFT();
+                    case MoveType.Left:
+                        MoveLeft();
                         break;
-                    case MoveType.RIGHT:
-                        moveRIGHT();
+                    case MoveType.Right:
+                        MoveRight();
                         break;
                 }
             }
         }
 
-        private void moveUP()
+        private void MoveUp()
         {
-            set_positionY(_position.Y - GameLoop.dt * ElementMoveSpeed);
+            Position = new Vector2f(Position.X, Position.Y - GameLoop.Dt * MoveSpeed);
 
-            if (_position.Y <= _newPosition.Y)
+            if (Position.Y <= NewPosition.Y)
             {
-                _moveType = MoveType.NONE;
-                set_positionY(_newPosition.Y);
+                MoveType = MoveType.None;
+                Position = NewPosition;
             }
         }
 
-        private void moveDOWN()
+        private void MoveDown()
         {
-            set_positionY(_position.Y + GameLoop.dt * ElementMoveSpeed);
+            Position = new Vector2f(Position.X, Position.Y + GameLoop.Dt * MoveSpeed);
 
-            if (_position.Y >= _newPosition.Y)
+            if (Position.Y >= NewPosition.Y)
             {
-                _moveType = MoveType.NONE;
-                set_positionY(_newPosition.Y);
+                MoveType = MoveType.None;
+                Position = NewPosition;
             }
         }
 
-        private void moveLEFT()
+        private void MoveLeft()
         {
-            set_positionX(_position.X - GameLoop.dt * ElementMoveSpeed);
+            Position = new Vector2f(Position.X - GameLoop.Dt * MoveSpeed, Position.Y);
 
-            if (_position.X <= _newPosition.X)
+            if (Position.X <= NewPosition.X)
             {
-                _moveType = MoveType.NONE;
-                set_positionX(_newPosition.X);
+                MoveType = MoveType.None;
+                Position = NewPosition;
             }
         }
 
-        private void moveRIGHT()
+        private void MoveRight()
         {
-            set_positionX(_position.X + GameLoop.dt * ElementMoveSpeed);
+            Position = new Vector2f(Position.X + GameLoop.Dt * MoveSpeed, Position.Y);
 
-            if (_position.X >= _newPosition.X)
+            if (Position.X >= NewPosition.X)
             {
-                _moveType = MoveType.NONE;
-                set_positionX(_newPosition.X);
+                MoveType = MoveType.None;
+                Position = NewPosition;
             }
-        }
-
-        public void set_newPosition(Vector2f newPosition)
-        {
-            this._newPosition = newPosition;
-        }
-
-        public void set_newPositionX(float x)
-        {
-            this._newPosition.X = x;
-        }
-
-        public void set_newPositionY(float y)
-        {
-            this._newPosition.Y = y;
-        }
-
-        public float get_newPositionX()
-        {
-            return _newPosition.X;
-        }
-
-        public float get_newPositionY()
-        {
-            return _newPosition.Y;
-        }
-
-        public void set_moveType(MoveType moveType)
-        {
-            this._moveType = moveType;
-        }
-
-        public MoveType get_moveType()
-        {
-            return _moveType;
-        }
-
-        public void set_elementType(ElementType type)
-        {
-            this._type = type;
-        }
-
-        public ElementType get_elementType()
-        {
-            return _type;
-        }
-
-        public int getPoints()
-        {
-            return Points;
         }
 
         public override void Draw()
         {
-            Initializer.Window.Draw(_sprite);
-            if (_selected || _pressed)
+            Initializer.Window.Draw(Sprite);
+            if (Selected || Pressed)
             {
-                Initializer.Window.Draw(_selectSprite);
+                Initializer.Window.Draw(SelectSprite);
             }
         }
     }

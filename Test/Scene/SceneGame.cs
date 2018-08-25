@@ -1,68 +1,70 @@
-﻿using System;
+﻿using Pulse.Grid;
+using Pulse.World;
 
-using SFML.Graphics;
-using Test.Grid;
-
-namespace Test.Scene
+namespace Pulse.Scene
 {
-    class SceneGame : AbstractScene
+    public class SceneGame : AbstractScene
     {
-        World _world = null;
-        GameGrid _grid = null;
-        GameLogic _gameLogic = null;
+        private GameWorld world = null;
+        private GameGrid grid = null;
+        private GameLogic gameLogic = null;
 
         public SceneGame()
         {
 
         }
+
         public override void Generate()
         {
-            _background = new Background(BackgroundType.Turquoise);
+            background = new Background(BackgroundType.Turquoise);
 
-            _world = new World();
+            world = new GameWorld();
 
-            _grid = new GameGrid();
+            grid = new GameGrid();
 
-            _gameLogic = new GameLogic();
-            _gameLogic.Generate();
+            gameLogic = new GameLogic();
+            gameLogic.Generate();
 
-            _gui = new GUI.GameInterface(this);
-            _gui.Generate();
+            gui = new GUI.GameInterface(this);
+            gui.Generate();
 
-            _grid.generateCells();    // Создаем сетку из пустых клеток
-            _world.generateElements();  // Создаем элементы по созданной сетке
-            _grid.bindElementsToCells();   // Привязываем элементы к сетке
+            // Создаем сетку из пустых клеток
+            grid.GenerateCells();
+            // Создаем элементы по созданной сетке
+            world.GenerateElements();
+            // Привязываем элементы к сетке
+            grid.BindElementsToCells();   
         }
 
         public override void Destroy()
         {
-            _background = null;
+            background = null;
 
-            _grid.Destroy();
-            _grid = null;
+            grid.Destroy();
+            grid = null;
 
-            _world.Destroy();
-            _world = null;
+            world.Destroy();
+            world = null;
 
-            _gameLogic.Destroy();
-            _gameLogic = null;
+            gameLogic.Destroy();
+            gameLogic = null;
 
-            _gui.Destroy();
-            _gui = null;
+            gui.Destroy();
+            gui = null;
         }
 
         public override void Update()
         {
-            _gameLogic.Update();
-            _world.Update();
-            _gui.Update();
+            gameLogic.Update();
+            world.Update();
+            gui.Update();
         }
 
         public override void Draw()
         {
-            _background.Draw();
-            _world.Draw();
-            _gui.Draw();
+            background.Draw();
+            world.Draw();
+            gui.Draw();
         }
 
         public override void Transition()

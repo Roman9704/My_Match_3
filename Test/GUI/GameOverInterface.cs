@@ -1,51 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using SFML.Graphics;
 using SFML.System;
 
-using Test.Button;
-using Test.GUI.GUIElement;
+using Pulse.GUI.GUIObject.Button;
+using Pulse.GUI.GUIObject;
+using Pulse.World;
 
-namespace Test.GUI
+namespace Pulse.GUI
 {
-    class GameOverInterface : AbstractGUI
+    public class GameOverInterface : AbstractGUI
     {
-        const int _sizeText = World.AmountOfElements * 6;
-        SquareButton _buttonOk = null;
-        Inscription _inscriptionScore = null;
+        private const int sizeText = GameWorld.AmountOfElements * 6;
+        private RectangularButton buttonOk = null;
+        private Inscription inscriptionScore = null;
 
-        public GameOverInterface(Test.Scene.AbstractScene scene)
+        public GameOverInterface(Pulse.Scene.AbstractScene scene)
         {
-            set_Scene(scene);
+            Scene = scene;
         }
 
         public override void Generate()
         {
-            _listOfGUIElements = new List<AbstractGUIElement>();
+            GUIObjectsList = new List<AbstractGUIObject>();
 
-            _listOfGUIElements.Add(new Inscription("Game Over", Content.Font, _sizeText));
-            _listOfGUIElements[0].set_position(new Vector2f(Initializer.WindowWidth / 2 - _sizeText * 2.8f, Initializer.WindowHeight / 2 - _sizeText * 2));
+            GUIObjectsList.Add(new Inscription("Game Over", Content.Font, sizeText));
+            GUIObjectsList[0].Position = new Vector2f(Initializer.WindowWidth / 2 - sizeText * 2.8f, Initializer.WindowHeight / 2 - sizeText * 2);
 
-            _listOfGUIElements.Add(new Inscription("Your score: " + GameLogic.Score.ToString(), Content.Font, _sizeText));
-            _listOfGUIElements[1].set_position(new Vector2f(_listOfGUIElements[0].get_positionX() - _sizeText * 1.5f, _listOfGUIElements[0].get_positionY() + _sizeText * 1.5f));
-            _inscriptionScore = _listOfGUIElements[1] as Inscription;
-            _inscriptionScore.set_color(new Color(254, 216, 1));
+            GUIObjectsList.Add(new Inscription("Your score: " + GameLogic.Score.ToString(), Content.Font, sizeText));
+            GUIObjectsList[1].Position = new Vector2f(GUIObjectsList[0].Position.X - sizeText * 1.5f, GUIObjectsList[0].Position.Y + sizeText * 1.5f);
+            inscriptionScore = GUIObjectsList[1] as Inscription;
+            inscriptionScore.Color = new Color(254, 216, 1);
 
-            _buttonOk = new SquareButton(60, Content.ButtonOkSprite, Content.ButtonOkSelectSprite, Initializer.WindowWidth / 2 - 60 / 2, _listOfGUIElements[1].get_positionY() + 60 / 2 + _sizeText * 1.5f);
-            _buttonOk.Clicked += _scene.Transition;
+            var position = new Vector2f(Initializer.WindowWidth / 2 - 60 / 2, GUIObjectsList[1].Position.Y + 60 / 2 + sizeText * 1.5f);
+            var size = new Vector2f(60, 60);
+            buttonOk = new RectangularButton(size, Content.ButtonOkSprite, Content.ButtonOkSelectSprite, position);
+            buttonOk.Clicked += Scene.Transition;
         }
 
         public override void Destroy()
         {
-            _buttonOk.Clicked -= _scene.Transition;
-            _buttonOk.Destroy();
-            _buttonOk = null;
+            buttonOk.Clicked -= Scene.Transition;
+            buttonOk.Destroy();
+            buttonOk = null;
 
-            _listOfGUIElements.Clear();
-            _listOfGUIElements = null;
+            GUIObjectsList.Clear();
+            GUIObjectsList = null;
 
-            _scene = null;
+            Scene = null;
         }
 
         public override void Update()
@@ -55,10 +57,10 @@ namespace Test.GUI
 
         public override void Draw()
         {
-            _buttonOk.Draw();
-            for (int i = 0; i < _listOfGUIElements.Count; i++)
+            buttonOk.Draw();
+            for (int i = 0; i < GUIObjectsList.Count; i++)
             {
-                _listOfGUIElements[i].Draw();
+                GUIObjectsList[i].Draw();
             }
         }
     }

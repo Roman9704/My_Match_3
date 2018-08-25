@@ -1,17 +1,17 @@
-﻿using SFML.Graphics;
-using SFML.System;
+﻿using SFML.System;
 
-namespace Test
+namespace Pulse
 {
     class GameLoop
     {
-        Clock _clock;
-        public static float dt = 0;
-        //const float DENOMINATOR = 1;
+        private Clock clock;
+        public static float Dt = 0;
+        // Control the speed of the game
+        //const float denominator = 1; 
 
         public GameLoop()
         {
-            _clock = new Clock();
+            clock = new Clock();
         }
 
         public void Update()
@@ -20,7 +20,7 @@ namespace Test
             {
                 Initializer.Window.DispatchEvents();
 
-                update_dt();
+                UpdateDt();
 
                 if (Initializer.Window.HasFocus())
                 {
@@ -33,11 +33,11 @@ namespace Test
             }
         }
 
-        private void update_dt()
+        private void UpdateDt()
         {
-            dt = _clock.ElapsedTime.AsSeconds();
-            _clock.Restart();
-            //dt /= DENOMINATOR; // Скорость игры
+            Dt = clock.ElapsedTime.AsSeconds();
+            clock.Restart();
+            //Dt /= denominator;
         }
     }
 }

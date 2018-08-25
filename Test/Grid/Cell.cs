@@ -1,32 +1,31 @@
 ﻿using SFML.System;
-using System;
 
-namespace Test.Grid
+namespace Pulse.Grid
 {
-    class Cell
+    public class Cell
     {
-        Vector2f _position;
-        Vector2i _indices;
-        Element _element = null;
+        public Vector2f Position { get; set; }
+        public Vector2i Indices { get; set; }
+        public Element Element { get; set; }
 
         public Cell(int X, int Y, float x, float y)
         {
-            set_indices(X, Y);
-            set_position(x, y);
+            Indices = new Vector2i(X, Y);
+            Position = new Vector2f(x, y);
         }
 
         public void Destroy()
         {
-            unbind_element();
+            UnbindElement();
         }
 
-        public void changeBind_element(Element newElement)
+        public void ChangeBindElement(Element newElement)
         {
-            unbind_element();
-            bind_element(newElement);
+            UnbindElement();
+            BindElement(newElement);
         }
 
-        public void addCellToChosenCells()
+        public void AddCellToChosenCells()
         {
             if (GameLogic.AreElementsMove == false && PlayerActions.ChosenCells.Count < 2)
             {
@@ -34,99 +33,41 @@ namespace Test.Grid
             }
             else
             {
-                _element.set_pressed(false);
+                Element.Pressed = false;
             }
         }
 
-        public void removeCellInChosenCells()
+        public void RemoveCellInChosenCells()
         {
             PlayerActions.ChosenCells.Remove(this);
         }
 
-        public void bind_element(Element element)
+        public void BindElement(Element element)
         {
-            set_element(element);
+            Element = element;
 
-            element.Clicked += addCellToChosenCells;
-            element.UnClicked += removeCellInChosenCells;
+            Element.Clicked += AddCellToChosenCells;
+            Element.UnClicked += RemoveCellInChosenCells;
         }
 
-        public void unbind_element()
+        public void UnbindElement()
         {
-            if (_element != null)
+            if (Element != null)
             {
-                _element.Clicked -= addCellToChosenCells;
-                _element.UnClicked -= removeCellInChosenCells;
+                Element.Clicked -= AddCellToChosenCells;
+                Element.UnClicked -= RemoveCellInChosenCells;
 
-                set_element(null);
+                Element = null;
             }
-        }
-
-        public void set_position(Vector2f Position)
-        {
-            this._position = Position;
-        }
-
-        public void set_position(float x, float y)
-        {
-            _position.X = x;
-            _position.Y = y;
-        }
-
-        public Vector2f get_position()
-        {
-            return _position;
-        }
-
-        public float get_positionX()
-        {
-            return _position.X;
-        }
-
-        public float get_positionY()
-        {
-            return _position.Y;
-        }
-
-        public void set_indices(Vector2i Indices)
-        {
-            this._indices = Indices;
-        }
-        public void set_indices(int x, int y)
-        {
-            _indices.X = x;
-            _indices.Y = y;
-        }
-        public Vector2i get_indices()
-        {
-            return _indices;
-        }
-        public int get_indicesX()
-        {
-            return _indices.X;
-        }
-        public int get_indicesY()
-        {
-            return _indices.Y;
-        }
-
-        public void set_element(Element element)
-        {
-            this._element = element;
-        }
-
-        public Element get_element()
-        {
-            return _element;
         }
 
         public ElementType get_elementType()
         {
-            if (_element == null)
+            if (Element == null)
             {
-                return ElementType.NONE;
+                return ElementType.None;
             }
-            return _element.get_elementType();
+            return Element.Type;
         }
     }
 }

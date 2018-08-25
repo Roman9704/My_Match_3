@@ -8,3 +8,15 @@ D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Release\sfmlnet-window-
 D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Release\Test.exe
 D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Release\Test.pdb
 D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Release\Test.csprojResolveAssemblyReference.cache
+G:\Dev\My_Match_3\Test\bin\Release\Test.exe.config
+G:\Dev\My_Match_3\Test\bin\Release\Test.exe
+G:\Dev\My_Match_3\Test\bin\Release\Test.pdb
+G:\Dev\My_Match_3\Test\bin\Release\sfmlnet-audio-2.dll
+G:\Dev\My_Match_3\Test\bin\Release\sfmlnet-graphics-2.dll
+G:\Dev\My_Match_3\Test\bin\Release\sfmlnet-system-2.dll
+G:\Dev\My_Match_3\Test\bin\Release\sfmlnet-window-2.dll
+G:\Dev\My_Match_3\Test\obj\Release\Test.csprojAssemblyReference.cache
+G:\Dev\My_Match_3\Test\obj\Release\Test.csproj.CoreCompileInputs.cache
+G:\Dev\My_Match_3\Test\obj\Release\Test.csproj.CopyComplete
+G:\Dev\My_Match_3\Test\obj\Release\Test.exe
+G:\Dev\My_Match_3\Test\obj\Release\Test.pdb

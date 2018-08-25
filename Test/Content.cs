@@ -2,9 +2,9 @@
 
 using SFML.Graphics;
 
-namespace Test
+namespace Pulse
 {
-    static class Content
+    public static class Content
     {
         public const string ContentDir = "Content\\";
 

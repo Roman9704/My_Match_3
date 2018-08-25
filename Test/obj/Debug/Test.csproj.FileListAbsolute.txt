@@ -8,3 +8,15 @@ D:\Users\Roman\summer practise\Game Forest\Test\Test\bin\Debug\sfmlnet-window-2.
 D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
 D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Debug\Test.exe
 D:\Users\Roman\summer practise\Game Forest\Test\Test\obj\Debug\Test.pdb
+G:\Dev\My_Match_3\Test\obj\Debug\Test.csproj.CoreCompileInputs.cache
+G:\Dev\My_Match_3\Test\obj\Debug\Test.exe
+G:\Dev\My_Match_3\Test\obj\Debug\Test.pdb
+G:\Dev\My_Match_3\Test\bin\Debug\Test.exe.config
+G:\Dev\My_Match_3\Test\bin\Debug\Test.exe
+G:\Dev\My_Match_3\Test\bin\Debug\Test.pdb
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-audio-2.dll
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-graphics-2.dll
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-system-2.dll
+G:\Dev\My_Match_3\Test\bin\Debug\sfmlnet-window-2.dll
+G:\Dev\My_Match_3\Test\obj\Debug\Test.csproj.CopyComplete
+G:\Dev\My_Match_3\Test\obj\Debug\Test.csprojAssemblyReference.cache

@@ -1,11 +1,9 @@
-﻿using SFML.Graphics;
-
-namespace Test.Scene
+﻿namespace Pulse.Scene
 {
-    abstract class AbstractScene
+    public abstract class AbstractScene
     {
-        protected Background _background = null;
-        protected Test.GUI.AbstractGUI _gui = null;
+        protected Background background = null;
+        protected GUI.AbstractGUI gui = null;
 
         public abstract void Generate();
         public abstract void Destroy();

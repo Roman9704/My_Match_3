@@ -1,9 +1,9 @@
 ﻿using SFML.System;
-using System.Collections.Generic;
+using Pulse.World;
 
-namespace Test.Grid
+namespace Pulse.Grid
 {
-    class GameGrid
+    public class GameGrid
     {
         public const int PartitionWidth = 5;
         public const int CoordinateShift = 5;
@@ -17,8 +17,8 @@ namespace Test.Grid
 
         public void Destroy()
         {
-            for (int y = 0; y < World.AmountOfElements; y++)
-                for (int x = 0; x < World.AmountOfElements; x++)
+            for (int y = 0; y < GameWorld.AmountOfElements; y++)
+                for (int x = 0; x < GameWorld.AmountOfElements; x++)
                 {
                     Cells[y, x].Destroy();
                     Cells[y, x] = null;
@@ -26,13 +26,13 @@ namespace Test.Grid
             Cells = null;
         }
 
-        public void generateCells()
+        public void GenerateCells()
         {
-            Cells = new Cell[World.AmountOfElements, World.AmountOfElements];
+            Cells = new Cell[GameWorld.AmountOfElements, GameWorld.AmountOfElements];
 
             int X, Y;
-            for (int y = 0; y < World.AmountOfElements; y++)
-                for (int x = 0; x < World.AmountOfElements; x++)
+            for (int y = 0; y < GameWorld.AmountOfElements; y++)
+                for (int x = 0; x < GameWorld.AmountOfElements; x++)
                 {
                     X = x * ((int)Element.ElementSize + PartitionWidth) + CoordinateShift;
                     Y = y * ((int)Element.ElementSize + PartitionWidth) + CoordinateShift;
@@ -41,28 +41,18 @@ namespace Test.Grid
                 }
         }
 
-        public void bindElementsToCells()
+        public void BindElementsToCells()
         {
-            for (int y = 0; y < World.AmountOfElements; y++)
-                for (int x = 0; x < World.AmountOfElements; x++)
+            for (int y = 0; y < GameWorld.AmountOfElements; y++)
+                for (int x = 0; x < GameWorld.AmountOfElements; x++)
                 {
-                    Cells[y, x].bind_element(World.Elements[y, x]);
+                    Cells[y, x].BindElement(GameWorld.Elements[y, x]);
                 }
         }
 
         public static Vector2f get_position(int x, int y)
         {
-            return Cells[y, x].get_position();
-        }
-
-        public static float get_positionX(int x, int y)
-        {
-            return Cells[y, x].get_positionX();
-        }
-
-        public static float get_positionY(int x, int y)
-        {
-            return Cells[y, x].get_positionY();
+            return Cells[y, x].Position;
         }
     }
 }

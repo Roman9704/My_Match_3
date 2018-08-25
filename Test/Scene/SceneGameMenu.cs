@@ -1,8 +1,6 @@
-﻿using SFML.Graphics;
-
-namespace Test.Scene
+﻿namespace Pulse.Scene
 {
-    class SceneGameMenu : AbstractScene
+    public class SceneGameMenu : AbstractScene
     {
         
 
@@ -13,29 +11,29 @@ namespace Test.Scene
 
         public override void Generate()
         {
-            _background = new Background(BackgroundType.DarkPurple);
+            background = new Background(BackgroundType.DarkPurple);
 
-            _gui = new GUI.GameMenuInterface(this);
-            _gui.Generate();
+            gui = new GUI.GameMenuInterface(this);
+            gui.Generate();
         }
 
         public override void Destroy()
         {
-             _background = null;
+             background = null;
 
-            _gui.Destroy();
-            _gui = null;
+            gui.Destroy();
+            gui = null;
         }
 
         public override void Update()
         {
-            _gui.Update();
+            gui.Update();
         }
 
         public override void Draw()
         {
-            _background.Draw();
-            _gui.Draw();
+            background.Draw();
+            gui.Draw();
         }
 
         public override void Transition()
